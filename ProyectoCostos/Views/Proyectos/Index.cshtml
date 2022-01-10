@@ -1,0 +1,978 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+
+    <!-- Font Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+
+
+    <link href="~/css/estilosdashboard.css" rel="stylesheet" />
+    <link href="~/css/estiloscliente.css" rel="stylesheet" />
+    <title>Proyectos</title>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-dark" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center">
+                <img src="http://www.rossmon.co.cr/wp-content/uploads/2021/06/cropped-imageonline-co-transparentimage-2.png"
+                     alt="" width="100">
+            </div>
+            <div class="list-group list-group-flush text-muted my-3">
+                <a href="~/Clientes/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-users me-2"></i>Clientes
+                </a>
+                <a href="~/Proyectos/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-project-diagram me-2"></i>Proyectos
+                </a>
+                <a href="~/Reportes/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-folder me-2"></i>Reportes
+                </a>
+                <a href="~/Configuracion/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-cog me-2"></i>Configuración
+                </a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-xxl navbar-dark bg-dark px-4">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-align-left text-muted fs-4" id="menu-toggle"></i>
+                    </div>
+
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+
+
+                    <!-- Toggle button -->
+                    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                            data-mdb-target="#navbarRightAlignExample" aria-controls="navbarRightAlignExample"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="fas fa-bars text-muted fs-4"></span>
+                    </button>
+
+
+                    <!-- Collapsible wrapper -->
+                    <div class="collapse navbar-collapse" id="navbarRightAlignExample">
+                        <!-- Left links -->
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item me-3 me-lg-0 dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-mdb-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user me-2"></i> María Fernanda Sanchéz Valerín
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="#">Directora administrativa</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="~/Configuracion/">Configuración</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="#">Cerrar sesión</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- Left links -->
+                    </div>
+                    <!-- Collapsible wrapper -->
+                </div>
+            </nav>
+            <div class="container-fluid px-4">
+                <div class="row my-5">
+                    <div>
+                        <a id="btnModalAgregaProyecto" class="btn btn-dark mb-5" href="#!" role="button" data-mdb-toggle="modal" data-mdb-target="#modalAgregaProyecto"><i class="fas fa-folder-plus"></i> Agregar proyecto</a>
+                    </div>
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table id="tabla-proyecto" class="table bg-white rounded table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Código
+                                        </th>
+                                        <th>
+                                            Nombre
+                                        </th>
+                                        <th>
+                                            Descripción
+                                        </th>
+                                        <th>
+                                            Inicio
+                                        </th>
+                                        <th>
+                                            Fin
+                                        </th>
+                                        <th>
+                                            Monto
+                                        </th>
+                                        <th>
+                                            Costos
+                                        </th>
+                                        <th>
+                                            Contrato
+                                        </th>
+                                        <th>
+                                            IdCliente
+                                        </th>
+                                        <th>
+                                            Cliente
+                                        </th>
+                                        <th>
+                                            Estado
+                                        </th>
+                                        <th>
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-proyectos">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal de agregar proyectos  -->
+    <div class="modal fade" id="modalAgregaProyecto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <h5 class="modal-title text-center py-2" id="exampleModalLabel">Agregar Proyecto</h5>
+                <div class="modal-body">
+                    <form id="formularioAgregaProyecto" enctype="multipart/form-data">
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombre">
+                                    <label for="floatingInput">Nombre</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" name="txtInicio" id="txtInicio" />
+                                    <label for="floatingInput">Inicio</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" name="txtFinal" id="txtFinal" />
+                                    <label for="floatingInput">Final</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectClientes" name="selectClientes">
+                                        <option selected disabled value="">Seleccione</option>
+                                    </select>
+                                    <label for="floatingInput">Cliente</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectEstado" name="selectEstado">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Cancelado">Cancelado</option>
+                                    </select>
+                                    <label for="floatingInput">Estado</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectMoneda" name="selectMoneda">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="CRC">Colones</option>
+                                        <option value="USD">Dolares</option>
+                                    </select>
+                                    <label for="floatingInput">Moneda</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type='text' class="CurrencyInput form-control" name="txtMonto" id="txtMonto" placeholder="Monto" />
+                                    <label for="floatingInput">Monto</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input readonly type='text' class="CurrencyInput form-control" name="txtCambio" id="txtCambio" placeholder="Tipo Cambio" />
+                                    <label for="floatingInput">Tipo Cambio</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" name="txtDescripcion" id="txtDescripcion" placeholder="Descripción"></textarea>
+                                    <label for="floatingInput">Descripción</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="txtContrato" id="txtContrato" placeholder="Contrato" type="file" accept="application/pdf" />
+                                    <label for="floatingInput">Contrato</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-folder-plus"></i> Agregar proyecto</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal de editar proyectos  -->
+    <div class="modal fade" id="modalEditaProyecto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="modal-title text-center py-3" id="exampleModalLabel">Editar proyecto</h5>
+                    <form id="formularioEditaProyecto" enctype="multipart/form-data">
+                        <input type="hidden" name="txtEditaIdProyecto" id="txtEditaIdProyecto" value="" />
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input readonly type="text" class="form-control" name="txtEditaCodProyecto" id="txtEditaCodProyecto" placeholder="Codigo">
+                                    <label for="floatingInput">Código</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="txtEditaNombre" id="txtEditaNombre" placeholder="Nombre">
+                                    <label for="floatingInput">Nombre</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" name="txtEditaInicio" id="txtEditaInicio" placeholder="Inicio">
+                                    <label for="floatingInput">Inicio</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" name="txtEditaFinal" id="txtEditaFinal" placeholder="Final">
+                                    <label for="floatingInput">Final</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectEditaClientes" name="selectEditaClientes">
+                                        <option selected value="">Seleccione</option>
+                                    </select>
+                                    <label for="floatingInput">Cliente</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectEditaEstado" name="selectEditaEstado">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Cancelado">Cancelado</option>
+                                    </select>
+                                    <label for="floatingInput">Estado</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectEditaMoneda" name="selectEditaMoneda">
+                                        <option disabled value="">Seleccione</option>
+                                        <option selected value="CRC">Colones</option>
+                                        <option value="USD">Dolares</option>
+                                    </select>
+                                    <label for="floatingInput">Moneda</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="CurrencyInput form-control" name="txtEditaMonto" id="txtEditaMonto" placeholder="Monto">
+                                    <label for="floatingInput">Monto</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input readonly type='text' class="CurrencyInput form-control" name="txtEditaCambio" id="txtEditaCambio" placeholder="Tipo Cambio" value="0" />
+                                    <label for="floatingInput">Tipo Cambio</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" name="txtEditaDescripcion" id="txtEditaDescripcion" placeholder="Descripción"></textarea>
+                                    <label for="floatingInput">Descripción</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="txtEditaContrato" id="txtEditaContrato" placeholder="Contrato" type="file" value="" accept="application/pdf" />
+                                    <label for="floatingInput">Contrato</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-pencil-alt"></i> Editar proyecto</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal de eliminar proyectos  -->
+    <div class="modal fade" id="modalEliminaProyecto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Eliminar proyecto</h5>
+                    <hr />
+                    <p>
+                        ¿Desea eliminar el proyecto seleccionado?
+                    </p>
+                </div>
+                <form id="formularioEliminaProyecto">
+                    <input type="hidden" name="txtEliminaProyecto" id="txtEliminaProyecto" value="" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-mdb-dismiss="modal"><i class="fas fa-arrow-circle-left"></i> Cancelar</button>
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Template tabla proyectos  -->
+    <template id="template-tabla-proyecto">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button type="button" class="btn-sm btn-outline-info btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-info"></i>
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn-sm btn-outline-success btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-clipboard-check"></i>
+                </button>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button type="button" class="btn-edita btn-sm btn-outline-warning btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button type="button" class="btn-elimina btn-sm btn-outline-danger btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Variables
+        let wrapper = document.getElementById("wrapper");
+        let menuToggle = document.getElementById("menu-toggle");
+        const tablaProyectos = document.getElementById('tabla-proyectos');
+        let x = '';
+        // Template
+        const templateTablaProyecto = document.getElementById('template-tabla-proyecto').content;
+        // Fragmento para evitar el reflow
+        const fragmento = document.createDocumentFragment();
+        // Movimiento de menu
+        menuToggle.addEventListener('click', () => {
+            wrapper.classList.toggle("toggled");
+        })
+        // Esto es lo que carga el DOM apenas renderiza la pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDataProyectos();
+        })
+        // Funcionalidad para eliminar o editar cliente
+        tablaProyectos.addEventListener('click', (e) => {
+            btnAccion(e);
+        })
+        const fetchDataProyectos = async() => {
+            try {
+                const url = "@Url.Content("~/Proyectos/listarProyectos")";
+                const response = await fetch(url);
+                const data = await response.json();
+                /*console.log(data);*/
+                listarProyectos(data);
+            } catch (error) { console.log(error); }
+        }
+        const listarProyectos = (data) => {
+            data.forEach(element => {
+                templateTablaProyecto.querySelectorAll('td')[0].textContent = element.CodProyecto;
+                templateTablaProyecto.querySelectorAll('td')[1].textContent = element.Nombre;
+                templateTablaProyecto.querySelectorAll('td')[2].textContent = element.Descripcion;
+                templateTablaProyecto.querySelectorAll('td')[3].textContent = element.Inicio;
+                templateTablaProyecto.querySelectorAll('td')[4].textContent = element.Fin;
+                templateTablaProyecto.querySelectorAll('td')[5].textContent = Dinero.format(element.Monto);
+                templateTablaProyecto.querySelector('.fa-info').dataset.IdProyecto = element.IdProyecto;
+                templateTablaProyecto.querySelector('.fa-clipboard-check').dataset.Contrato = element.Contrato;
+                templateTablaProyecto.querySelectorAll('td')[8].textContent = element.NumeroIdentificacion;
+                templateTablaProyecto.querySelectorAll('td')[9].textContent = element.Cliente;
+                templateTablaProyecto.querySelectorAll('td')[10].textContent = element.Estado;
+                templateTablaProyecto.querySelector('.fa-pencil-alt').dataset.IdProyecto = element.IdProyecto;
+                templateTablaProyecto.querySelector('.fa-trash-alt').dataset.IdProyecto = element.IdProyecto;
+                const clone = templateTablaProyecto.cloneNode(true);
+                fragmento.appendChild(clone);
+            })
+            tablaProyectos.appendChild(fragmento);
+            cargarDatatable();
+        }
+        // Datatable
+        const cargarDatatable = () => {
+            $('#tabla-proyecto').DataTable(
+                {
+                    "bDestroy": true,
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                    },
+                },
+            );
+        }
+        // Agregar
+        const formularioAgregaProyecto = document.getElementById('formularioAgregaProyecto');
+        const txtNombre = document.getElementById('txtNombre');
+        const txtInicio = document.getElementById('txtInicio');
+        const txtFinal = document.getElementById('txtFinal');
+        const txtMonto = document.getElementById('txtMonto');
+        const txtDescripcion = document.getElementById('txtDescripcion');
+        const selectClientes = document.getElementById('selectClientes');
+        const txtContrato = document.getElementById('txtContrato');
+        const selectMoneda = document.getElementById('selectMoneda');
+        const txtCambio = document.getElementById('txtCambio');
+        const selectEstado = document.getElementById('selectEstado');
+        // Boton de apertura de modal agrega cliente
+        const btnModalAgregaProyecto = document.getElementById('btnModalAgregaProyecto');
+        btnModalAgregaProyecto.addEventListener('click', () => {
+            limpiarSelect(selectClientes);
+            fetchDataClientes(selectClientes);
+        })
+        // Obtiene los datos de la base de datos y los ingresa al select respectivo, en este caso el de provincias
+        const fetchDataClientes = async (select) => {
+            try {
+                const url = "@Url.Content("~/Proyectos/listarClientes")";
+                const response = await fetch(url);
+                const data = await response.json();
+                listarSelectClientes(data, select);
+            } catch (error) { console.log(error); }
+        }
+        // Obtiene los datos de la base de datos y los ingresa al select respectivo, en este caso el de provincias (Agregar cliente)
+        const listarSelectClientes = (data, select) => {
+            data.forEach(element => {
+                const Clientes = document.createElement('option');
+                Clientes.value = element.NumeroIdentificacion;
+                Clientes.textContent = element.Nombre;
+                fragmento.appendChild(Clientes);
+            })
+            select.appendChild(fragmento);
+        }
+        const validarDiferentesTiposValoresInput = () => {
+            // Este regex solo deja ingresar valores numericos en input indicado
+            txtMonto.addEventListener("input", () => { txtMonto.value = txtMonto.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1'); });
+            txtEditaMonto.addEventListener("input", () => { txtEditaMonto.value = txtEditaMonto.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1'); });
+        }
+        // Se establece el evento submit para el formulario de agregar cliente y prevenimos el envio de datos
+        formularioAgregaProyecto.addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            validarCampos();
+        })
+        const validarCampos = () => {
+            // Captura los valores ingresados por el usuario
+            const nombreValor = txtNombre.value.trim();
+            const inicioValor = txtInicio.value.trim();
+            const finalValor = txtFinal.value.trim();
+            const montoValor = txtMonto.value.trim();
+            const descripcionValor = txtDescripcion.value.trim();
+            const clientesValor = selectClientes.value.trim();
+            const contratoValor = txtContrato.value.trim();
+            const monedaValor = selectMoneda.value.trim();
+            const cambioValor = txtCambio.value.trim();
+            const estadoValor = selectEstado.value.trim();
+            // Banderas que indican que los datos por el usuario fueron ingresados correctamente
+            let banderaUno = false;
+            let banderaDos = false;
+            let banderaTres = false;
+            let banderaCuatro = false;
+            let banderaCinco = false;
+            let banderaSeis = false;
+            let banderaSiete = false;
+            let banderaOcho = false;
+            let banderaNueve = false;
+            let banderaDiez = false;
+            // Primero valida que el campo no este vacio
+            !nombreValor ? (validarErroneo(txtNombre, 'Campo requerido'), banderaUno = false) : (validarCorrecto(txtNombre), banderaUno = true);
+            !inicioValor ? (validarErroneo(txtInicio, 'Campo requerido'), banderaDos = false) : (validarCorrecto(txtInicio), banderaDos = true);
+            !finalValor ? (validarErroneo(txtFinal, 'Campo requerido'), banderaTres = false) : (validarCorrecto(txtFinal), banderaTres = true);
+            !montoValor ? (validarErroneo(txtMonto, 'Campo requerido'), banderaCuatro = false) : (validarCorrecto(txtMonto), banderaCuatro = true);
+            !descripcionValor ? (validarErroneo(txtDescripcion, 'Campo requerido'), banderaCinco = false) : (validarCorrecto(txtDescripcion), banderaCinco = true);
+            !clientesValor ? (validarSelectErroneo(selectClientes, 'Seleccione un cliente'), banderaSeis = false) : (validarSelectCorrecto(selectClientes), banderaSeis = true);
+            !contratoValor ? (validarErroneo(txtContrato, 'Campo requerido'), banderaSiete = false) : (validarCorrecto(txtContrato), banderaSiete = true);
+            !monedaValor ? (validarSelectErroneo(selectMoneda, 'Seleccione un tipo de moneda'), banderaOcho = false) : (validarSelectCorrecto(selectMoneda), banderaOcho = true);
+            !estadoValor ? (validarSelectErroneo(selectEstado, 'Seleccione un estado'), banderaNueve = false) : (validarSelectCorrecto(selectEstado), banderaNueve = true);
+            !cambioValor ? (validarErroneo(txtCambio, 'Campo requerido'), banderaDiez = false) : (validarCorrecto(txtCambio), banderaDiez = true);
+            banderaUno && banderaDos && banderaTres && banderaCuatro && banderaCinco && banderaSeis && banderaSiete && banderaOcho && banderaNueve && banderaDiez ? btnAgregarProyecto() : console.log('no')
+        }
+        const validarErroneo = (input, mensaje) => {
+            const formControl = input.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = mensaje;
+            input.className = 'form-control is-invalid';
+        }
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarSelectErroneo = (select, mensaje) => {
+            const formSelect = select.parentElement;
+            const advetencia = formSelect.querySelector('small');
+            advetencia.innerText = mensaje;
+            select.className = 'form-select is-invalid';
+        }
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarCorrecto = (input) => {
+            const formControl = input.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = '';
+            input.className = 'form-control is-valid';
+        }
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarSelectCorrecto = (select) => {
+            const formControl = select.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = '';
+            select.className = 'form-select is-valid';
+        }
+        const btnAgregarProyecto = () => {
+            let datosFormularioAgregaProyecto = new FormData(formularioAgregaProyecto);
+            fetchAgregarProyecto(datosFormularioAgregaProyecto);
+        }
+        const fetchAgregarProyecto = async (datosFormularioAgregaProyecto) => {
+            try {
+                var fileUpload = $("#txtContrato").get(0);
+                var files = fileUpload.files;
+                // Create FormData object
+                var fileData = new FormData();
+                // Looping over all files and add it to FormData object
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                const url = "@Url.Content("~/Proyectos/agregarProyecto")";
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: datosFormularioAgregaProyecto,
+                    data: fileData
+                })
+                const data = await response.json();
+                console.log(data)
+                if (data == 1) {
+                    fetchDataProyectos();
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '¡Proyecto agregado correctamente!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Proyecto existente!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                }
+            } catch (error) { console.log(error); }
+        }
+        const limpiarSelect = (selectX) => {
+            for (let i = selectX.options.length; i > 0; i--) {
+                selectX.remove(i);
+            }
+        }
+        var Dinero = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'CRC',
+        });
+        const btnAccion = (e) => {
+            if (e.target.classList.contains('fa-info')) {
+                const IDProyecto = e.target.dataset.IdProyecto;
+                VerCostos(IDProyecto);
+            }
+            if (e.target.classList.contains('fa-trash-alt')) {
+                const numeroIdProyecto = e.target.dataset.IdProyecto;
+                transladarValoresEliminaProyecto(numeroIdProyecto);
+            }
+            if (e.target.classList.contains('fa-pencil-alt')) {
+                const numeroIdProyecto = e.target.dataset.IdProyecto;
+                fetchDataProyecto(numeroIdProyecto);
+                $('#modalEditaProyecto').modal('show');
+            }
+            if (e.target.classList.contains('fa-clipboard-check')) {
+                const Contrato = e.target.dataset.Contrato;
+                VerContrato(Contrato);
+            }
+        }
+        function VerCostos(IDProyecto) {
+            window.location.href = "../Costos/Index?id=" + IDProyecto;
+        }
+        function VerContrato(Contrato) {
+            window.open("../../Carga/"+Contrato);
+        }
+        // Variables de eliminar proyecto
+        const formularioEliminaProyecto = document.getElementById('formularioEliminaProyecto');
+        formularioEliminaProyecto.addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            btnEliminarProyecto();
+        })
+        // Accion para eliminar cliente
+        const btnEliminarProyecto = () => {
+            let datosFormularioEliminaProyecto = new FormData(formularioEliminaProyecto);
+            fetchEliminarProyecto(datosFormularioEliminaProyecto);
+        }
+        const transladarValoresEliminaProyecto = (numeroIdProyecto) => {
+            $('#modalEliminaProyecto').modal('show');
+            const txtEliminaProyecto = document.getElementById('txtEliminaProyecto');
+            txtEliminaProyecto.value = numeroIdProyecto;
+        }
+        const fetchEliminarProyecto = async (datosFormularioEliminaProyecto) => {
+            try {
+                const url = "@Url.Content("~/Proyectos/eliminarProyectos")";
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: datosFormularioEliminaProyecto
+                })
+                const data = await response.json();
+                if (data == 1) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '¡Proyecto eliminado correctamente!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Ha ocurrido un error comuníquese con los desarrolladores!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                }
+            } catch (error) { console.log(error); }
+        }
+        // Variables de validacion formulario de editar cliente
+        const formularioEditaProyecto = document.getElementById('formularioEditaProyecto');
+        const txtEditaIdProyecto = document.getElementById('txtEditaIdProyecto');
+        const txtEditaCodProyecto = document.getElementById('txtEditaCodProyecto');
+        const txtEditaNombre = document.getElementById('txtEditaNombre');
+        const txtEditaInicio = document.getElementById('txtEditaInicio');
+        const txtEditaFinal = document.getElementById('txtEditaFinal');
+        const txtEditaMonto = document.getElementById('txtEditaMonto');
+        const txtEditaDescripcion = document.getElementById('txtEditaDescripcion');
+        const selectEditaClientes = document.getElementById('selectEditaClientes');
+        const txtEditaContrato = document.getElementById('txtEditaContrato');
+        const selectEditaEstado = document.getElementById('selectEditaEstado');
+        const selectEditaMoneda = document.getElementById('selectEditaMoneda');
+        const txtEditaCambio = document.getElementById('txtEditaCambio');
+        // Edita cliente
+        const fetchDataClientesEdita = async (valorCliente) => {
+            try {
+                const url = "@Url.Content("~/Proyectos/listarClientes")";
+                const response = await fetch(url);
+                const data = await response.json();
+                listarSelectClientesEdita(data, valorCliente);
+            } catch (error) { console.log(error); }
+        }
+        // Obtiene los datos de la base de datos y los ingresa al select respectivo, en este caso el de cantones
+        const listarSelectClientesEdita = (data, valorCliente) => {
+            limpiarSelect(selectEditaClientes);
+            data.forEach(element => {
+                const Clientes = document.createElement('option');
+                Clientes.value = element.NumeroIdentificacion;
+                Clientes.textContent = element.Nombre;
+                fragmento.appendChild(Clientes);
+            })
+            selectEditaClientes.appendChild(fragmento);
+            selectEditaClientes.value = valorCliente;
+        }
+        // Se establece el evento submit para el formulario de editar proyecto y prevenimos el envio de datos
+        formularioEditaProyecto.addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            validarCamposEdita();
+        })
+        const validarCamposEdita = () => {
+            // Captura los valores ingresados por el usuario
+            const idProyectoValor = txtEditaIdProyecto.value.trim();
+            const nombreValor = txtEditaNombre.value.trim();
+            const inicioValor = txtEditaInicio.value.trim();
+            const finalValor = txtEditaFinal.value.trim();
+            const montoValor = txtEditaMonto.value.trim();
+            const descripcionValor = txtEditaDescripcion.value.trim();
+            const clientesValor = selectEditaClientes.value.trim();
+            const estadoValor = selectEditaEstado.value.trim();
+            const monedaValor = selectEditaMoneda.value.trim();
+            const cambioValor = txtEditaCambio.value.trim();
+            // Banderas que indican que los datos por el usuario fueron ingresados correctamente
+            let banderaUno = false;
+            let banderaDos = false;
+            let banderaTres = false;
+            let banderaCuatro = false;
+            let banderaCinco = false;
+            let banderaSeis = false;
+            let banderaOcho = false;
+            let banderaNueve = false;
+            let banderaDiez = false;
+            let banderaOnce = false;
+            // Primero valida que el campo no este vacio
+            !nombreValor ? (validarErroneo(txtEditaNombre, 'Campo requerido'), banderaUno = false) : (validarCorrecto(txtEditaNombre), banderaUno = true);
+            !inicioValor ? (validarErroneo(txtEditaInicio, 'Campo requerido'), banderaDos = false) : (validarCorrecto(txtEditaInicio), banderaDos = true);
+            !finalValor ? (validarErroneo(txtEditaFinal, 'Campo requerido'), banderaTres = false) : (validarCorrecto(txtEditaFinal), banderaTres = true);
+            !montoValor ? (validarErroneo(txtEditaMonto, 'Campo requerido'), banderaCuatro = false) : (validarCorrecto(txtEditaMonto), banderaCuatro = true);
+            !descripcionValor ? (validarErroneo(txtEditaDescripcion, 'Campo requerido'), banderaCinco = false) : (validarCorrecto(txtEditaDescripcion), banderaCinco = true);
+            !clientesValor ? (validarSelectErroneo(selectEditaClientes, 'Seleccione un cliente'), banderaSeis = false) : (validarSelectCorrecto(selectEditaClientes), banderaSeis = true);
+            !idProyectoValor ? (validarErroneo(txtEditaIdProyecto, 'Campo requerido'), banderaOcho = false) : (validarCorrecto(txtEditaIdProyecto), banderaOcho = true);
+            !estadoValor ? (validarSelectErroneo(selectEditaEstado, 'Seleccione un estado'), banderaNueve = false) : (validarSelectCorrecto(selectEditaEstado), banderaNueve = true);
+            !monedaValor ? (validarSelectErroneo(selectEditaMoneda, 'Seleccione un tipo de moneda'), banderaDiez = false) : (validarSelectCorrecto(selectEditaMoneda), banderaDiez = true);
+            !cambioValor ? (validarErroneo(txtEditaCambio, 'Campo requerido'), banderaOnce = false) : (validarCorrecto(txtEditaCambio), banderaOnce = true);
+            banderaUno && banderaDos && banderaTres && banderaCuatro && banderaCinco && banderaSeis && banderaOcho && banderaNueve && banderaDiez && banderaOnce ? btnEditarProyecto() : console.log('no')
+        }
+        // Accion para editar proyecto
+        const btnEditarProyecto = () => {
+            let datosFormularioEditaProyecto = new FormData(formularioEditaProyecto);
+            fetchEditarProyecto(datosFormularioEditaProyecto);
+        }
+        const fetchDataProyecto = async (numeroIdProyecto) => {
+            const proyecto = { IDProyecto: numeroIdProyecto }
+            const Cabeceras = new Headers({
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            });
+            try {
+                const url = "@Url.Content("~/Proyectos/listarProyecto")";
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: Cabeceras,
+                    body: JSON.stringify(proyecto),
+                })
+                const data = await response.json();
+                listarProyecto(data);
+            } catch (error) { console.log(error); }
+        }
+        const listarProyecto = (data) => {
+            data.forEach(proyecto => {
+                fetchDataClientesEdita(proyecto.NumeroIdentificacion);
+                txtEditaIdProyecto.value = proyecto.IDProyecto;
+                txtEditaCodProyecto.value = proyecto.CodProyecto;
+                txtEditaNombre.value = proyecto.Nombre;
+                txtEditaInicio.value = proyecto.Inicio;
+                txtEditaFinal.value = proyecto.Fin;
+                txtEditaMonto.value = proyecto.Monto;
+                txtEditaDescripcion.value = proyecto.Descripcion;
+                selectEditaEstado.value = proyecto.Estado;
+            })
+        }
+        const fetchEditarProyecto = async (datosFormularioEditaProyecto) => {
+            try {
+                var fileUpload = $("#txtEditaContrato").get(0);
+                var files = fileUpload.files;
+                // Create FormData object
+                var fileData = new FormData();
+                // Looping over all files and add it to FormData object
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                if (document.getElementById("txtEditaContrato").files.length == 0) {
+                    const url = "@Url.Content("~/Proyectos/actualizarProyecto")";
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: datosFormularioEditaProyecto,
+                    })
+                    const data = await response.json();
+                    console.log(data);
+                    if (data == 1) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: '¡Proyecto editado correctamente!',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        })
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: '¡Ha ocurrido un error comuníquese con los desarrolladores!',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        })
+                    }
+                } else {
+                    const url = "@Url.Content("~/Proyectos/actualizarProyectoFile")";
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: datosFormularioEditaProyecto,
+                        data: fileData
+                    })
+                    const data = await response.json();
+                    console.log(data);
+                    if (data == 1) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: '¡Proyecto editado correctamente!',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        })
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: '¡Ha ocurrido un error comuníquese con los desarrolladores!',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        })
+                    }
+                }
+            } catch (error) { console.log(error); }
+        }
+        $('input.CurrencyInput').on('blur', function () {
+            if (this.value == "") { this.value = 0 };
+            const value = this.value.replace(/,/g, '');
+            this.value = parseFloat(value).toLocaleString('en-US', {
+                style: 'decimal',
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
+            });
+        });
+        selectMoneda.addEventListener('change', (e) => {
+            const valorMoneda = e.target.value;
+            if (valorMoneda == 'USD') {
+                $('#txtCambio').prop('readonly', false);
+                $('#txtCambio').prop('disabled', false);
+            } else {
+                $('#txtCambio').prop('readonly', true);
+                $('#txtCambio').prop('disabled', true);
+                txtCambio.value = 0;
+            }
+        })
+        txtCambio.addEventListener('click', (e) => {
+            if (txtCambio.value == "0.00" || txtCambio.value == "0") {
+                txtCambio.value = "";
+            }
+        })
+        txtMonto.addEventListener('click', (e) => {
+            if (txtMonto.value == "0.00") {
+                txtMonto.value = "";
+            }
+        })
+        selectEditaMoneda.addEventListener('change', (e) => {
+            const valorMoneda = e.target.value;
+            if (valorMoneda == 'USD') {
+                $('#txtEditaCambio').prop('readonly', false);
+                $('#txtEditaCambio').prop('disabled', false);
+            } else {
+                $('#txtEditaCambio').prop('readonly', true);
+                $('#txtEditaCambio').prop('disabled', true);
+                txtCambio.value = 0;
+            }
+        })
+        txtEditaCambio.addEventListener('click', (e) => {
+            if (txtEditaCambio.value == "0.00" || txtEditaCambio.value == "0") {
+                txtEditaCambio.value = "";
+            }
+        })
+        txtEditaMonto.addEventListener('click', (e) => {
+            if (txtEditaMonto.value == "0.00") {
+                txtEditaMonto.value = "";
+            }
+        })
+    </script>
+</body>
+</html>

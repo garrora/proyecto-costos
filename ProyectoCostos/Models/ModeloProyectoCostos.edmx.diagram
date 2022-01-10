@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fc59a1d9481f429bb82319a5143e7a83" Name="Diagram1">
+        <EntityTypeShape EntityType="ModeloProyectoCostos.Cantones" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloProyectoCostos.Clientes" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloProyectoCostos.CodGenerar" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloProyectoCostos.Costos" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloProyectoCostos.Distritos" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloProyectoCostos.Provincias" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloProyectoCostos.Proyectos" Width="1.5" PointX="9.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloProyectoCostos.TipoCosto" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloProyectoCostos.Usuarios" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="ModeloProyectoCostos.FK_Cantones_Provincias" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloProyectoCostos.FK_Clientes_Cantones" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloProyectoCostos.FK_Distritos_Cantones" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloProyectoCostos.FK_Clientes_Distritos" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloProyectoCostos.FK_Clientes_Provincias" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloProyectoCostos.FK_Proyectos_Clientes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

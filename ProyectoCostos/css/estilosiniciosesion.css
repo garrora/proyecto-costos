@@ -1,0 +1,17 @@
+﻿body {
+    background-color: #181818;
+    background: linear-gradient(to right, #718A93, #181818);
+    font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+    font-family: 'Fjalla One', sans-serif;
+    letter-spacing: 4px;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.fondo_sesion {
+    background-image: url('../assets/images/iniciosesion.jpg');
+    background-position: center center;
+}

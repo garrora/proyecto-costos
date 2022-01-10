@@ -1,0 +1,895 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+
+    <!-- Font Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+
+
+    <link href="~/css/estilosdashboard.css" rel="stylesheet" />
+    <link href="~/css/estiloscliente.css" rel="stylesheet" />
+    <title>Costos</title>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-dark" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center">
+                <img src="http://www.rossmon.co.cr/wp-content/uploads/2021/06/cropped-imageonline-co-transparentimage-2.png"
+                     alt="" width="100">
+            </div>
+            <div class="list-group list-group-flush text-muted my-3">
+                <a href="~/Clientes/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-users me-2"></i>Clientes
+                </a>
+                <a href="~/Proyectos/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-project-diagram me-2"></i>Proyectos
+                </a>
+                <a href="~/Reportes/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-folder me-2"></i>Reportes
+                </a>
+                <a href="~/Configuracion/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-cog me-2"></i>Configuración
+                </a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-xxl navbar-dark bg-dark px-4">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-align-left text-muted fs-4" id="menu-toggle"></i>
+                    </div>
+
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+
+
+                    <!-- Toggle button -->
+                    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                            data-mdb-target="#navbarRightAlignExample" aria-controls="navbarRightAlignExample"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-bars text-muted"></i>
+                    </button>
+
+
+                    <!-- Collapsible wrapper -->
+                    <div class="collapse navbar-collapse" id="navbarRightAlignExample">
+                        <!-- Left links -->
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item me-3 me-lg-0 dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-mdb-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user me-2"></i> María Fernanda Sanchéz Valerín
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="#">Directora administrativa</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="~/Configuracion/">Configuración</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="#">Cerrar sesión</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- Left links -->
+                    </div>
+                    <!-- Collapsible wrapper -->
+                </div>
+            </nav>
+            <div class="container-fluid px-4">
+                <input hidden type="text" id="txtIDProyecto" name="txtIDProyecto" />
+                <div class="row my-5">
+                    <div>
+                        <a id="btnModalAgregaCosto" class="btn btn-dark mb-5" href="#!" role="button" data-mdb-toggle="modal" data-mdb-target="#modalAgregaCosto"><i class="fas fa-folder-plus"></i> Agregar costo</a>
+                    </div>
+                    <div class="col">
+                        <h4>Planilla</h4>
+                        <div class="table-responsive">
+                            <table id="tabla-planilla" class="table bg-white rounded table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Nombre
+                                        </th>
+                                        <th>
+                                            Fecha
+                                        </th>
+                                        <th>
+                                            Monto
+                                        </th>
+                                        <th>
+                                            Estado
+                                        </th>
+                                        <th>
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-planillas">
+                                </tbody>
+                            </table>
+                        </div>
+                        <h4>Directos</h4>
+                        <div class="table-responsive">
+                            <table id="tabla-directo" class="table bg-white rounded table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Nombre
+                                        </th>
+                                        <th>
+                                            Fecha
+                                        </th>
+                                        <th>
+                                            Monto
+                                        </th>
+                                        <th>
+                                            Estado
+                                        </th>
+                                        <th>
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-directos">
+                                </tbody>
+                            </table>
+                        </div>
+                        <h4>Indirectos</h4>
+                        <div class="table-responsive">
+                            <table id="tabla-indirecto" class="table bg-white rounded table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Nombre
+                                        </th>
+                                        <th>
+                                            Fecha
+                                        </th>
+                                        <th>
+                                            Monto
+                                        </th>
+                                        <th>
+                                            Estado
+                                        </th>
+                                        <th>
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-indirectos">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal de agregar costos  -->
+    <div class="modal fade" id="modalAgregaCosto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <h5 class="modal-title text-center py-2" id="exampleModalLabel">Agregar Costo</h5>
+                <div class="modal-body">
+                    <form id="formularioAgregaCosto">
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombre">
+                                    <label for="floatingInput">Nombre</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" name="txtFecha" id="txtFecha" />
+                                    <label for="floatingInput">Fecha</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectTipoCosto" name="selectTipoCosto">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="1">Planilla</option>
+                                        <option value="2">Directo</option>
+                                        <option value="3">Indirecto</option>
+                                    </select>
+                                    <label for="floatingInput">Tipo Costo</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectEstado" name="selectEstado">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Cancelado">Cancelado</option>
+                                    </select>
+                                    <label for="floatingInput">Estado</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectMoneda" name="selectMoneda">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="CRC">Colones</option>
+                                        <option value="USD">Dolares</option>
+                                    </select>
+                                    <label for="floatingInput">Moneda</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type='text' class="CurrencyInput form-control" name="txtMonto" id="txtMonto" placeholder="Monto" />
+                                    <label for="floatingInput">Monto</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input readonly type='text' class="CurrencyInput form-control" name="txtCambio" id="txtCambio" placeholder="Cambio" />
+                                    <label for="floatingInput">Cambio</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div hidden class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="txtAgregaIDProyecto" id="txtAgregaIDProyecto" placeholder="IDProyecto" />
+                                    <label for="floatingInput">IDProyecto</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-folder-plus"></i> Agregar costo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal de editar costo  -->
+    <div class="modal fade" id="modalEditaCosto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <h5 class="modal-title text-center py-2" id="exampleModalLabel">Editar Costo</h5>
+                <div class="modal-body">
+                    <form id="formularioEditaCosto">
+                        <input type="hidden" name="txtEditaIDCosto" id="txtEditaIDCosto" value="" />
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="txtEditaNombre" id="txtEditaNombre" placeholder="Nombre">
+                                    <label for="floatingInput">Nombre</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" name="txtEditaFecha" id="txtEditaFecha" />
+                                    <label for="floatingInput">Fecha</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectEditaTipoCosto" name="selectEditaTipoCosto">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="1">Planilla</option>
+                                        <option value="2">Directo</option>
+                                        <option value="3">Indirecto</option>
+                                    </select>
+                                    <label for="floatingInput">Tipo Costo</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectEditaEstado" name="selectEditaEstado">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Cancelado">Cancelado</option>
+                                    </select>
+                                    <label for="floatingInput">Estado</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectEditaMoneda" name="selectEditaMoneda">
+                                        <option disabled value="">Seleccione</option>
+                                        <option selected value="CRC">Colones</option>
+                                        <option value="USD">Dolares</option>
+                                    </select>
+                                    <label for="floatingInput">Moneda</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type='text' class="CurrencyInput form-control" name="txtEditaMonto" id="txtEditaMonto" placeholder="Monto" />
+                                    <label for="floatingInput">Monto</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input readonly type='text' class="CurrencyInput form-control" name="txtEditaCambio" id="txtEditaCambio" placeholder="Cambio" value="0" />
+                                    <label for="floatingInput">Cambio</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-pencil-alt"></i> Editar costo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal de eliminar clientes  -->
+    <div class="modal fade" id="modalEliminaCosto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Eliminar costo</h5>
+                    <hr />
+                    <p>
+                        ¿Desea eliminar el costo seleccionado?
+                    </p>
+                </div>
+                <form id="formularioEliminaCosto">
+                    <input type="hidden" name="txtEliminaIDCosto" id="txtEliminaIDCosto" value="" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-mdb-dismiss="modal"><i class="fas fa-arrow-circle-left"></i> Cancelar</button>
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Template tabla planillas  -->
+    <template id="template-tabla-planilla">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button type="button" class="btn-edita btn-sm btn-outline-warning btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button type="button" class="btn-elimina btn-sm btn-outline-danger btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+    </template>
+    <!--Template tabla directos  -->
+    <template id="template-tabla-directo">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button type="button" class="btn-edita btn-sm btn-outline-warning btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button type="button" class="btn-elimina btn-sm btn-outline-danger btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+    </template>
+    <!--Template tabla indirectos  -->
+    <template id="template-tabla-indirecto">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button type="button" class="btn-edita btn-sm btn-outline-warning btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button type="button" class="btn-elimina btn-sm btn-outline-danger btn-floating" data-mdb-ripple-color="dark">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Variables
+        let wrapper = document.getElementById("wrapper");
+        let menuToggle = document.getElementById("menu-toggle");
+        const tablaPlanillas = document.getElementById('tabla-planillas');
+        const tablaDirectos = document.getElementById('tabla-directos');
+        const tablaIndirectos = document.getElementById('tabla-indirectos');
+        let x = '';
+        // Templates
+        const templateTablaPlanilla = document.getElementById('template-tabla-planilla').content;
+        const templateTablaDirecto = document.getElementById('template-tabla-directo').content;
+        const templateTablaIndirecto = document.getElementById('template-tabla-indirecto').content;
+        // Fragmento para evitar el reflow
+        const fragmentoP = document.createDocumentFragment();
+        const fragmentoD = document.createDocumentFragment();
+        const fragmentoI = document.createDocumentFragment();
+        // Movimiento de menu
+        menuToggle.addEventListener('click', () => {
+            wrapper.classList.toggle("toggled");
+        })
+        tablaPlanillas.addEventListener('click', (e) => {
+            btnAccion(e);
+        })
+        tablaDirectos.addEventListener('click', (e) => {
+            btnAccion(e);
+        })
+        tablaIndirectos.addEventListener('click', (e) => {
+            btnAccion(e);
+        })
+        // Esto es lo que carga el DOM apenas renderiza la pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const id = urlParams.get('id');
+            const txtIDProyecto = document.getElementById('txtIDProyecto');
+            txtIDProyecto.value = id;
+            const txtAgregaIDProyecto = document.getElementById('txtAgregaIDProyecto');
+            txtAgregaIDProyecto.value = id;
+            console.log(id);
+            fetchDataCostos(id);
+        })
+        const fetchDataCostos = async(id) => {
+            try {
+                const url = "@Url.Content("~/Costos/listarCostos")";
+                const response = await fetch(url);
+                const data = await response.json();
+                /*console.log(data);*/
+                listarCostos(data, id);
+            } catch (error) { console.log(error); }
+        }
+        const listarCostos = (data, id) => {
+            data.forEach(element => {
+                if (element.Tipo == 1 && element.IdProyecto == id) {
+                    templateTablaPlanilla.querySelectorAll('td')[0].textContent = element.Nombre;
+                    templateTablaPlanilla.querySelectorAll('td')[1].textContent = element.FechaC;
+                    templateTablaPlanilla.querySelectorAll('td')[2].textContent = Dinero.format(element.Monto);
+                    templateTablaPlanilla.querySelectorAll('td')[3].textContent = element.Estado;
+                    templateTablaPlanilla.querySelector('.fa-pencil-alt').dataset.IDCosto = element.IDCosto;
+                    templateTablaPlanilla.querySelector('.fa-trash-alt').dataset.IDCosto = element.IDCosto;
+                    const clone = templateTablaPlanilla.cloneNode(true);
+                    fragmentoP.appendChild(clone);
+                } else if (element.Tipo == 2 && element.IdProyecto == id) {
+                    templateTablaDirecto.querySelectorAll('td')[0].textContent = element.Nombre;
+                    templateTablaDirecto.querySelectorAll('td')[1].textContent = element.FechaC;
+                    templateTablaDirecto.querySelectorAll('td')[2].textContent = Dinero.format(element.Monto);
+                    templateTablaDirecto.querySelectorAll('td')[3].textContent = element.Estado;
+                    templateTablaDirecto.querySelector('.fa-pencil-alt').dataset.IDCosto = element.IDCosto;
+                    templateTablaDirecto.querySelector('.fa-trash-alt').dataset.IDCosto = element.IDCosto;
+                    const clone = templateTablaDirecto.cloneNode(true);
+                    fragmentoD.appendChild(clone);
+                } else if (element.Tipo == 3 && element.IdProyecto == id) {
+                    templateTablaIndirecto.querySelectorAll('td')[0].textContent = element.Nombre;
+                    templateTablaIndirecto.querySelectorAll('td')[1].textContent = element.FechaC;
+                    templateTablaIndirecto.querySelectorAll('td')[2].textContent = Dinero.format(element.Monto);
+                    templateTablaIndirecto.querySelectorAll('td')[3].textContent = element.Estado;
+                    templateTablaIndirecto.querySelector('.fa-pencil-alt').dataset.IDCosto = element.IDCosto;
+                    templateTablaIndirecto.querySelector('.fa-trash-alt').dataset.IDCosto = element.IDCosto;
+                    const clone = templateTablaIndirecto.cloneNode(true);
+                    fragmentoI.appendChild(clone);
+                }
+            })
+            tablaPlanillas.appendChild(fragmentoP);
+            tablaDirectos.appendChild(fragmentoD);
+            tablaIndirectos.appendChild(fragmentoI);
+            cargarDatatable();
+        }
+        // Datatable
+        const cargarDatatable = () => {
+            $('#tabla-planilla').DataTable(
+                {
+                    "bDestroy": true,
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                    },
+                },
+            );
+            $('#tabla-directo').DataTable(
+                {
+                    "bDestroy": true,
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                    },
+                },
+            );
+            $('#tabla-indirecto').DataTable(
+                {
+                    "bDestroy": true,
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                    },
+                },
+            );
+        }
+        // Agregar
+        const formularioAgregaCosto = document.getElementById('formularioAgregaCosto');
+        const txtNombre = document.getElementById('txtNombre');
+        const txtFecha = document.getElementById('txtFecha');
+        const txtMonto = document.getElementById('txtMonto');
+        const txtCambio = document.getElementById('txtCambio');
+        const selectMoneda = document.getElementById('selectMoneda');
+        const selectTipoCosto = document.getElementById('selectTipoCosto');
+        const selectEstado = document.getElementById('selectEstado');
+        const validarDiferentesTiposValoresInput = () => {
+            // Este regex solo deja ingresar valores numericos en input indicado
+            txtMonto.addEventListener("input", () => { txtMonto.value = txtMonto.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1'); });
+            txtEditaMonto.addEventListener("input", () => { txtEditaMonto.value = txtEditaMonto.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1'); });
+        }
+        // Se establece el evento submit para el formulario de agregar cliente y prevenimos el envio de datos
+        formularioAgregaCosto.addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            validarCampos();
+        })
+        const validarCampos = () => {
+            // Captura los valores ingresados por el usuario
+            const nombreValor = txtNombre.value.trim();
+            const fechaValor = txtFecha.value.trim();
+            const montoValor = txtMonto.value.trim();
+            const monedaValor = selectMoneda.value.trim();
+            const cambioValor = txtCambio.value.trim();
+            const tipocostoValor = selectTipoCosto.value.trim();
+            const idproyectoValor = txtAgregaIDProyecto.value.trim();
+            const estadoValor = selectEstado.value.trim();
+            // Banderas que indican que los datos por el usuario fueron ingresados correctamente
+            let banderaUno = false;
+            let banderaDos = false;
+            let banderaTres = false;
+            let banderaCuatro = false;
+            let banderaCinco = false;
+            let banderaSeis = false;
+            let banderaSiete = false;
+            let banderaOcho = false;
+            // Primero valida que el campo no este vacio
+            !nombreValor ? (validarErroneo(txtNombre, 'Campo requerido'), banderaUno = false) : (validarCorrecto(txtNombre), banderaUno = true);
+            !fechaValor ? (validarErroneo(txtFecha, 'Campo requerido'), banderaDos = false) : (validarCorrecto(txtFecha), banderaDos = true);
+            !montoValor ? (validarErroneo(txtMonto, 'Campo requerido'), banderaTres = false) : (validarCorrecto(txtMonto), banderaTres = true);
+            !monedaValor ? (validarSelectErroneo(selectMoneda, 'Campo requerido'), banderaCuatro = false) : (validarSelectCorrecto(selectMoneda), banderaCuatro = true);
+            !cambioValor ? (validarErroneo(txtCambio, 'Campo requerido'), banderaCinco = false) : (validarCorrecto(txtCambio), banderaCinco = true);
+            !tipocostoValor ? (validarSelectErroneo(selectTipoCosto, 'Seleccione un cliente'), banderaSeis = false) : (validarSelectCorrecto(selectTipoCosto), banderaSeis = true);
+            !idproyectoValor ? (validarErroneo(txtAgregaIDProyecto, 'Campo requerido'), banderaSiete = false) : (validarCorrecto(txtAgregaIDProyecto), banderaSiete = true);
+            !estadoValor ? (validarSelectErroneo(selectEstado, 'Seleccione un estado'), banderaOcho = false) : (validarSelectCorrecto(selectEstado), banderaOcho = true);
+            banderaUno && banderaDos && banderaTres && banderaCuatro && banderaCinco && banderaSeis && banderaSiete && banderaOcho ? btnAgregarCosto() : console.log('no')
+        }
+        const validarErroneo = (input, mensaje) => {
+            const formControl = input.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = mensaje;
+            input.className = 'form-control is-invalid';
+        }
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarSelectErroneo = (select, mensaje) => {
+            const formSelect = select.parentElement;
+            const advetencia = formSelect.querySelector('small');
+            advetencia.innerText = mensaje;
+            select.className = 'form-select is-invalid';
+        }
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarCorrecto = (input) => {
+            const formControl = input.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = '';
+            input.className = 'form-control is-valid';
+        }
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarSelectCorrecto = (select) => {
+            const formControl = select.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = '';
+            select.className = 'form-select is-valid';
+        }
+        const btnAgregarCosto = () => {
+            let datosFormularioAgregaCosto = new FormData(formularioAgregaCosto);
+            fetchAgregarCosto(datosFormularioAgregaCosto);
+        }
+        const fetchAgregarCosto = async (datosFormularioAgregaCosto) => {
+            try {
+                const url = "@Url.Content("~/Costos/agregarCosto")";
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: datosFormularioAgregaCosto
+                })
+                const data = await response.json();
+                console.log(data)
+                if (data == 1) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '¡Costo agregado correctamente!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Costo existente!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                }
+            } catch (error) { console.log(error); }
+        }
+        var Dinero = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'CRC',
+        });
+        const btnAccion = (e) => {
+            if (e.target.classList.contains('fa-trash-alt')) {
+                const numeroIDCosto = e.target.dataset.IDCosto;
+                transladarValoresEliminaCosto(numeroIDCosto);
+            }
+            if (e.target.classList.contains('fa-pencil-alt')) {
+                const numeroIDCosto = e.target.dataset.IDCosto;
+                fetchDataCosto(numeroIDCosto);
+                $('#modalEditaCosto').modal('show');
+            }
+        }
+        // Variables de eliminar proyecto
+        const formularioEliminaCosto = document.getElementById('formularioEliminaCosto');
+        formularioEliminaCosto.addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            btnEliminarCosto();
+        })
+        // Accion para eliminar cliente
+        const btnEliminarCosto = () => {
+            let datosFormularioEliminaCosto = new FormData(formularioEliminaCosto);
+            fetchEliminarCosto(datosFormularioEliminaCosto);
+        }
+        const transladarValoresEliminaCosto = (numeroIDCosto) => {
+            $('#modalEliminaCosto').modal('show');
+            const txtEliminaIDCosto = document.getElementById('txtEliminaIDCosto');
+            txtEliminaIDCosto.value = numeroIDCosto;
+        }
+        const fetchEliminarCosto = async (datosFormularioEliminaCosto) => {
+            try {
+                const url = "@Url.Content("~/Costos/eliminarCosto")";
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: datosFormularioEliminaCosto
+                })
+                const data = await response.json();
+                if (data == 1) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '¡Costo eliminado correctamente!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Ha ocurrido un error comuníquese con los desarrolladores!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                }
+            } catch (error) { console.log(error); }
+        }
+        // Variables de validacion formulario de editar
+        const formularioEditaCosto = document.getElementById('formularioEditaCosto');
+        const txtEditaIDCosto = document.getElementById('txtEditaIDCosto');
+        const txtEditaNombre = document.getElementById('txtEditaNombre');
+        const txtEditaFecha = document.getElementById('txtEditaFecha');
+        const txtEditaMonto = document.getElementById('txtEditaMonto');
+        const txtEditaCambio = document.getElementById('txtEditaCambio');
+        const selectEditaMoneda = document.getElementById('selectEditaMoneda');
+        const selectEditaTipoCosto = document.getElementById('selectEditaTipoCosto');
+        const selectEditaEstado = document.getElementById('selectEditaEstado');
+        // Se establece el evento submit para el formulario de editar proyecto y prevenimos el envio de datos
+        formularioEditaCosto.addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            validarCamposEdita();
+        })
+        const validarCamposEdita = () => {
+            const nombreValor = txtEditaNombre.value.trim();
+            const fechaValor = txtEditaFecha.value.trim();
+            const montoValor = txtEditaMonto.value.trim();
+            const monedaValor = selectEditaMoneda.value.trim();
+            const cambioValor = txtEditaCambio.value.trim();
+            const tipocostoValor = selectEditaTipoCosto.value.trim();
+            const idcostoValor = txtEditaIDCosto.value.trim();
+            const estadoValor = selectEditaEstado.value.trim();
+            // Banderas que indican que los datos por el usuario fueron ingresados correctamente
+            let banderaUno = false;
+            let banderaDos = false;
+            let banderaTres = false;
+            let banderaCuatro = false;
+            let banderaCinco = false;
+            let banderaSeis = false;
+            let banderaSiete = false;
+            let banderaOcho = false;
+            // Primero valida que el campo no este vacio
+            !nombreValor ? (validarErroneo(txtEditaNombre, 'Campo requerido'), banderaUno = false) : (validarCorrecto(txtEditaNombre), banderaUno = true);
+            !fechaValor ? (validarErroneo(txtEditaFecha, 'Campo requerido'), banderaDos = false) : (validarCorrecto(txtEditaFecha), banderaDos = true);
+            !montoValor ? (validarErroneo(txtEditaMonto, 'Campo requerido'), banderaTres = false) : (validarCorrecto(txtEditaMonto), banderaTres = true);
+            !monedaValor ? (validarSelectErroneo(selectEditaMoneda, 'Campo requerido'), banderaCuatro = false) : (validarSelectCorrecto(selectEditaMoneda), banderaCuatro = true);
+            !cambioValor ? (validarErroneo(txtEditaCambio, 'Campo requerido'), banderaCinco = false) : (validarCorrecto(txtEditaCambio), banderaCinco = true);
+            !tipocostoValor ? (validarSelectErroneo(selectEditaTipoCosto, 'Seleccione un cliente'), banderaSeis = false) : (validarSelectCorrecto(selectEditaTipoCosto), banderaSeis = true);
+            !idcostoValor ? (validarErroneo(txtEditaIDCosto, 'Campo requerido'), banderaSiete = false) : (validarCorrecto(txtEditaIDCosto), banderaSiete = true);
+            !estadoValor ? (validarSelectErroneo(selectEditaEstado, 'Seleccione un estado'), banderaOcho = false) : (validarSelectCorrecto(selectEditaEstado), banderaOcho = true);
+            banderaUno && banderaDos && banderaTres && banderaCuatro && banderaCinco && banderaSeis && banderaSiete && banderaOcho ? btnEditarCosto() : console.log('no')
+        }
+        // Accion para editar proyecto
+        const btnEditarCosto = () => {
+            let datosFormularioEditaCosto = new FormData(formularioEditaCosto);
+            fetchEditarCosto(datosFormularioEditaCosto);
+        }
+        const fetchDataCosto = async (numeroIDCosto) => {
+            const costo = { IDCosto: numeroIDCosto }
+            const Cabeceras = new Headers({
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            });
+            try {
+                const url = "@Url.Content("~/Costos/listarCosto")";
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: Cabeceras,
+                    body: JSON.stringify(costo),
+                })
+                const data = await response.json();
+                listarCosto(data);
+            } catch (error) { console.log(error); }
+        }
+        const listarCosto = (data) => {
+            data.forEach(costo => {
+                txtEditaIDCosto.value = costo.IDCosto;
+                txtEditaNombre.value = costo.Nombre;
+                txtEditaFecha.value = costo.FechaC;
+                txtEditaMonto.value = costo.Monto;
+                selectEditaTipoCosto.value = costo.Tipo;
+                selectEditaEstado.value = costo.Estado;
+            })
+        }
+        const fetchEditarCosto = async (datosFormularioEditaCosto) => {
+            try {
+                const url = "@Url.Content("~/Costos/actualizarCosto")";
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: datosFormularioEditaCosto
+                })
+                const data = await response.json();
+                console.log(data);
+                if (data == 1) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '¡Costo editado correctamente!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '¡Ha ocurrido un error comuníquese con los desarrolladores!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                }
+            } catch (error) { console.log(error); }
+        }
+        $('input.CurrencyInput').on('blur', function () {
+            if (this.value == "") { this.value = 0 };
+            const value = this.value.replace(/,/g, '');
+            this.value = parseFloat(value).toLocaleString('en-US', {
+                style: 'decimal',
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
+            });
+        });
+        selectMoneda.addEventListener('change', (e) => {
+            const valorMoneda = e.target.value;
+            if (valorMoneda == 'USD') {
+                $('#txtCambio').prop('readonly', false);
+                $('#txtCambio').prop('disabled', false);
+            } else {
+                $('#txtCambio').prop('readonly', true);
+                $('#txtCambio').prop('disabled', true);
+                txtCambio.value = 0;
+            }
+        })
+        txtCambio.addEventListener('click', (e) => {
+            if (txtCambio.value == "0.00" || txtCambio.value == "0") {
+                txtCambio.value = "";
+            }
+        })
+        txtMonto.addEventListener('click', (e) => {
+            if (txtMonto.value == "0.00") {
+                txtMonto.value = "";
+            }
+        })
+        selectEditaMoneda.addEventListener('change', (e) => {
+            const valorMoneda = e.target.value;
+            if (valorMoneda == 'USD') {
+                $('#txtEditaCambio').prop('readonly', false);
+                $('#txtEditaCambio').prop('disabled', false);
+            } else {
+                $('#txtEditaCambio').prop('readonly', true);
+                $('#txtEditaCambio').prop('disabled', true);
+                txtCambio.value = 0;
+            }
+        })
+        txtEditaCambio.addEventListener('click', (e) => {
+            if (txtEditaCambio.value == "0.00" || txtEditaCambio.value == "0") {
+                txtEditaCambio.value = "";
+            }
+        })
+        txtEditaMonto.addEventListener('click', (e) => {
+            if (txtEditaMonto.value == "0.00") {
+                txtEditaMonto.value = "";
+            }
+        })
+    </script>
+</body>
+</html>

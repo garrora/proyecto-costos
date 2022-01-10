@@ -1,0 +1,639 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+
+    <!-- Font Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+
+
+    <link href="~/css/estilosdashboard.css" rel="stylesheet" />
+    <link href="~/css/estiloscliente.css" rel="stylesheet" />
+    <title>IT Rossmon - Reportes</title>
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-dark" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center">
+                <img src="http://www.rossmon.co.cr/wp-content/uploads/2021/06/cropped-imageonline-co-transparentimage-2.png"
+                     alt="" width="100">
+            </div>
+            <div class="list-group list-group-flush text-muted my-3">
+                <a href="~/Clientes/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-users me-2"></i>Clientes
+                </a>
+                <a href="~/Proyectos/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-project-diagram me-2"></i>Proyectos
+                </a>
+                <a href="~/Reportes/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-folder me-2"></i>Reportes
+                </a>
+                <a href="~/Configuracion/" class="list-group-item text-muted list-group-item-action bg-transparent">
+                    <i style="color: #B92125" class="fas fa-cog me-2"></i>Configuración
+                </a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-xxl navbar-dark bg-dark px-4">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-align-left text-muted fs-4" id="menu-toggle"></i>
+                    </div>
+
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+
+
+                    <!-- Toggle button -->
+                    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                            data-mdb-target="#navbarRightAlignExample" aria-controls="navbarRightAlignExample"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="fas fa-bars text-muted fs-4"></span>
+                    </button>
+
+
+                    <!-- Collapsible wrapper -->
+                    <div class="collapse navbar-collapse" id="navbarRightAlignExample">
+                        <!-- Left links -->
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item me-3 me-lg-0 dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-mdb-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user me-2"></i> María Fernanda Sanchéz Valerín
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="#">Directora administrativa</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="~/Configuracion/">Configuración</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="~/Clientes/cerrarSesion">Cerrar sesión</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- Left links -->
+                    </div>
+                    <!-- Collapsible wrapper -->
+                </div>
+            </nav>
+
+            <div class="container-fluid px-4">
+                <div class="align-items-center min-vh-100">
+                    <div class="container mt-5 w-75 bg-white rounded shadow">
+                        <h5 class="text-center modal-title py-5">Reportes</h5>
+                        <div class="row g-3 py-3">
+
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectTipoReporte" name="selectTipoReporte">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="1">Cantidad de proyectos por cliente</option>
+                                        <option value="2">Costos por proyecto</option>
+                                        <option value="3">Costos por proyecto, según el tipo de costo</option>
+                                        <option value="4">Facturas por proyecto</option>
+                                        <option value="5">Facturas por fecha</option>
+                                        <option value="6">Facturas por mes</option>
+                                        <option value="7">Facturas por año</option>
+                                    </select>
+                                    <label for="selectTipoReporte">Tipo de reporte</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectConsulta" name="selectConsulta">
+                                        <option selected value="">Seleccione</option>
+                                    </select>
+                                    <label for="selectConsulta">Consultar con</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 py-3">
+                            <div class="col-md" id="select3" name="select3" hidden>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectConsultaDos" name="selectConsultaDos">
+                                        <option selected value="">Seleccione</option>
+                                    </select>
+                                    <label id="lblConsultaDos" for="selectConsultaDos">-</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+
+                            <div class="col-md" id="fecha" name="fecha" hidden>
+                                <div class="form-floating mb-3">
+                                    <input type="date" id="txtFecha" name="txtFecha" class="form-control" />
+                                    <label for="Fecha">Fecha Inicial</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+
+                            <div class="col-md" id="fechaF" name="fechaF" hidden>
+                                <div class="form-floating mb-3">
+                                    <input type="date" id="txtFechaF" name="txtFechaF" class="form-control" />
+                                    <label for="Fecha">Fecha Final</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+
+                            <div class="col-md" id="mes" hidden>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="selectMes" name="selectMes">
+                                        <option selected value="">Seleccione</option>
+                                        <option value="1">Enero</option>
+                                        <option value="2">Febrero</option>
+                                        <option value="3">Marzo</option>
+                                        <option value="4">Abril</option>
+                                        <option value="5">Mayo</option>
+                                        <option value="6">Junio</option>
+                                        <option value="7">Julio</option>
+                                        <option value="8">Agosto</option>
+                                        <option value="9">Septiembre</option>
+                                        <option value="10">Octubre</option>
+                                        <option value="11">Noviembre</option>
+                                        <option value="12">Diciembre</option>
+                                    </select>
+                                    <label for="selectMes">Mes</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+
+                            <div class="col-md" id="anno" hidden>
+                                <div class="form-floating mb-3">
+                                    <input type="number" id="txtAnno" name="txtAnno" class="form-control" />
+                                    <label for="txtAnno">Año</label>
+                                    <small class="text-danger py-2"></small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3 mb-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <button id="btnVisualizarReporte" class="btn btn-dark"><i class="fas fa-eye me-2"></i>Visualizar reporte</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <!-- /#page-content-wrapper -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+
+        // Variables del dashboard
+        let wrapper = document.getElementById("wrapper");
+        let menuToggle = document.getElementById("menu-toggle");
+
+        // Movimiento de menu
+        menuToggle.addEventListener('click', () => {
+            wrapper.classList.toggle("toggled");
+        })
+        var VF = 0;
+        var VM = 0;
+        var VA = 0;
+        // Variables select
+        const selectTipoReporte = document.getElementById('selectTipoReporte');
+        const selectConsulta = document.getElementById('selectConsulta');
+        const selectConsultaDos = document.getElementById('selectConsultaDos');
+
+        // Variables botones
+        const btnVisualizarReporte = document.getElementById('btnVisualizarReporte');
+
+        // Variables iframe
+        const iframeReporte = document.getElementById('iframeReporte');
+
+        // Fragmento para evitar el reflow
+        const fragmento = document.createDocumentFragment();
+
+        // Banderas que indican que los datos por el usuario fueron ingresados correctamente
+        let banderaUno = false;
+        let banderaDos = false;
+        let banderaTres = false;
+
+
+        selectTipoReporte.addEventListener('change', () => {
+
+            const lblConsultaDos = document.getElementById('lblConsultaDos');
+            limpiarSelect(selectConsulta);
+            let valorSelect = selectTipoReporte.value;
+            if (valorSelect == 1) {
+
+                fetchDataCantidadProyectos();
+                $('#mes').prop('hidden', true);
+                $('#fecha').prop('hidden', true);
+                $('#fechaF').prop('hidden', true);
+                $('#anno').prop('hidden', true);
+                $('#select3').prop('hidden', true);
+            } else if (valorSelect == 2) {
+                fetchDataCostosProyecto();
+                $('#mes').prop('hidden', true);
+                $('#fecha').prop('hidden', true);
+                $('#fechaF').prop('hidden', true);
+                $('#anno').prop('hidden', true);
+                $('#select3').prop('hidden', true);
+            } else if (valorSelect == 3) {
+                limpiarSelect(selectConsultaDos); // Limpia select consulta dos
+                lblConsultaDos.textContent = 'Tipo de costo';
+                fetchDataCostosProyecto();
+                fetchDataTiposCostos();
+                $('#mes').prop('hidden', true);
+                $('#fecha').prop('hidden', true);
+                $('#fechaF').prop('hidden', true);
+                $('#anno').prop('hidden', true);
+                $('#select3').prop('hidden', false);
+            } else if (valorSelect == 4) {
+                limpiarSelect(selectConsultaDos); // Limpia select consulta dos
+                lblConsultaDos.textContent = 'Tipo de estado';
+                fetchDataCostosProyecto();
+                fetchDataEstadoCostos();
+                $('#mes').prop('hidden', true);
+                $('#fecha').prop('hidden', true);
+                $('#fechaF').prop('hidden', true);
+                $('#anno').prop('hidden', true);
+                $('#select3').prop('hidden', false);
+            }
+
+            if (valorSelect == 1 || valorSelect == 2) {
+                limpiarSelect(selectConsultaDos);
+                lblConsultaDos.textContent = '-';
+                $('#mes').prop('hidden', true);
+                $('#fecha').prop('hidden', true);
+                $('#fechaF').prop('hidden', true);
+                $('#anno').prop('hidden', true);
+            }
+            if (valorSelect == 5) {
+                fetchDataCostosProyecto();
+                $('#fecha').prop('hidden', false);
+                $('#fechaF').prop('hidden', false);
+                $('#mes').prop('hidden', true);
+                $('#anno').prop('hidden', true);
+                $('#select3').prop('hidden', true);
+            }
+            if (valorSelect == 6) {
+                fetchDataCostosProyecto();
+                $('#mes').prop('hidden', false);
+                $('#fecha').prop('hidden', true);
+                $('#fechaF').prop('hidden', true);
+                $('#anno').prop('hidden', false);
+                $('#select3').prop('hidden', true);
+            }
+            if (valorSelect == 7) {
+                fetchDataCostosProyecto();
+                $('#anno').prop('hidden', false);
+                $('#mes').prop('hidden', true);
+                $('#fecha').prop('hidden', true);
+                $('#fechaF').prop('hidden', true);
+                $('#select3').prop('hidden', true);
+            }
+
+        })
+
+        btnVisualizarReporte.addEventListener('click', () => {
+
+            validarCampos();
+
+            if (banderaUno && banderaDos) {
+
+                if (selectTipoReporte.value == 1) {
+                    const NumeroIdentificacion = selectConsulta.value;
+                    visualizarReporte(NumeroIdentificacion, 1, 0, 0, '', '', '', 'Nada', 'Nada');
+                } else if (selectTipoReporte.value == 2) {
+                    const idProyecto = selectConsulta.value;
+                    visualizarReporte(0, 2, idProyecto, 0, '', '', '', 'Nada', 'Nada');
+
+                }
+
+            }
+
+            if (selectTipoReporte.value == 3) {
+                validarCamposConsultaDos();
+                if (banderaTres) {
+                    const idProyecto = selectConsulta.value;
+                    const idTipo = selectConsultaDos.value;
+                    visualizarReporte(0, 3, idProyecto, idTipo, '', '', '', 'Nada', 'Nada');
+                }
+            } else if (selectTipoReporte.value == 4) {
+                validarCamposConsultaDos();
+                if (banderaTres) {
+                    const idProyecto = selectConsulta.value;
+                    const Estado = selectConsultaDos.options[selectConsultaDos.selectedIndex].text;
+                    visualizarReporte(0, 4, idProyecto, 0, Estado, '', '', 'Nada', 'Nada');
+                }
+            }  else {
+                validarSelectNormal(selectConsultaDos);
+            }
+
+            if (selectTipoReporte.value == 5) {
+                const idProyecto = selectConsulta.value;
+                const txtFecha = document.getElementById('txtFecha');
+                const Fecha = txtFecha.value.trim();
+                const txtFechaF = document.getElementById('txtFechaF');
+                const FechaF = txtFechaF.value.trim();
+                validarCamposFechas();
+                if (VF == 1) {
+                    visualizarReporte(0, 5, idProyecto, 0, 'Nada', Fecha, FechaF, 'Nada', 'Nada');
+                }
+            }
+
+            if (selectTipoReporte.value == 6) {
+                const idProyecto = selectConsulta.value;
+                var txtAnno = document.getElementById('txtAnno');
+                var Anno = txtAnno.value;
+                var selectMes = document.getElementById('selectMes');
+                var Mes = selectMes.value;
+                validarCamposMes();
+                if (VM == 1) {
+                    visualizarReporte(0, 6, idProyecto, 0, 'Nada', 'Nada', 'Nada', Mes, Anno);
+                }
+            }
+
+            if (selectTipoReporte.value == 7) {
+                const idProyecto = selectConsulta.value;
+                const txtAnno = document.getElementById('txtAnno');
+                const Anno = txtAnno.value.trim();
+                const Fecha = Anno + '-01-01';
+                const FechaF = Anno + '-12-31';
+                validarCamposAnno();
+                if (VA == 1) {
+                    visualizarReporte(0, 7, idProyecto, 0, 'Nada', Fecha, FechaF, 'Nada', 'Nada');
+                }
+            }
+
+        })
+
+        const limpiarSelect = (select) => {
+
+            for (let i = select.options.length; i > 0; i--) {
+
+                select.remove(i);
+            }
+
+        }
+
+
+        const fetchDataCantidadProyectos = async () => {
+
+            try {
+
+                const url = "@Url.Content("~/Reportes/listarCantidadProyectosCliente")";
+                const response = await fetch(url);
+                const data = await response.json();
+                listarSelectCantidadProyectosCliente(data);
+
+            } catch (error) { console.log(error); }
+
+        }
+
+
+        const fetchDataCostosProyecto = async () => {
+
+            try {
+
+                const url = "@Url.Content("~/Reportes/listarCostosProyecto")";
+                const response = await fetch(url);
+                const data = await response.json();
+                listarSelectCostosProyectoCliente(data);
+
+            } catch (error) { console.log(error); }
+
+        }
+
+        const fetchDataTiposCostos = async () => {
+
+            try {
+
+                const url = "@Url.Content("~/Reportes/listarTiposCostos")";
+                const response = await fetch(url);
+                const data = await response.json();
+                listarSelectTiposCostos(data);
+
+            } catch (error) { console.log(error); }
+
+        }
+
+        const fetchDataEstadoCostos = async () => {
+
+            try {
+
+                const url = "@Url.Content("~/Reportes/listarEstadoCostos")";
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log(data);
+                listarSelectTiposEstadoCostos(data);
+
+            } catch (error) { console.log(error); }
+
+        }
+
+
+        const listarSelectCantidadProyectosCliente = (data) => {
+
+            data.forEach(element => {
+                const consulta = document.createElement('option');
+                consulta.value = element.NumeroIdentificacion;
+                consulta.textContent = `${element.Nombre} - ${element.NumeroIdentificacion}`;
+                fragmento.appendChild(consulta);
+            })
+
+            selectConsulta.appendChild(fragmento);
+
+        }
+
+        const listarSelectCostosProyectoCliente = (data) => {
+
+            data.forEach(element => {
+                const consulta = document.createElement('option');
+                consulta.value = element.idProyecto;
+                consulta.textContent = `${element.numeroIdentificacion} - ${element.Cliente} - ${element.Proyecto}`;
+                fragmento.appendChild(consulta);
+            })
+
+            selectConsulta.appendChild(fragmento);
+
+        }
+
+        const listarSelectTiposCostos = (data) => {
+
+            data.forEach(element => {
+                const consulta = document.createElement('option');
+                consulta.value = element.IDTipo;
+                consulta.textContent = element.Nombre;
+                fragmento.appendChild(consulta);
+            })
+
+            selectConsultaDos.appendChild(fragmento);
+
+        }
+
+        const listarSelectTiposEstadoCostos = (data) => {
+
+
+            for (key in data) {
+                const consulta = document.createElement('option');
+                consulta.value = key;
+                consulta.textContent = data[key];
+                fragmento.appendChild(consulta);
+            }
+
+            selectConsultaDos.appendChild(fragmento);
+
+        }
+
+
+        const validarCampos = () => {
+
+            // Captura los valores seleccionados por el usuario
+            const valorConsulta = selectConsulta.value.trim();
+            const valorReporte = selectTipoReporte.value.trim();
+
+
+            !valorConsulta ? (validarSelectErroneo(selectConsulta, 'Seleccione una opción'), banderaUno = false) : (validarSelectCorrecto(selectConsulta), banderaUno = true);
+            !valorReporte ? (validarSelectErroneo(selectTipoReporte, 'Seleccione una ópción'), banderaDos = false) : (validarSelectCorrecto(selectTipoReporte), banderaDos = true);
+
+        }
+
+        const validarCamposConsultaDos = () => {
+
+            // Captura los valores seleccionados por el usuario
+            const valorConsultaDos = selectConsultaDos.value.trim();
+            !valorConsultaDos ? (validarSelectErroneo(selectConsultaDos, 'Seleccione una opción'), banderaTres = false) : (validarSelectCorrecto(selectConsultaDos), banderaTres = true);
+
+        }
+
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarSelectErroneo = (select, mensaje) => {
+            const formSelect = select.parentElement;
+            const advetencia = formSelect.querySelector('small');
+            advetencia.innerText = mensaje;
+            select.className = 'form-select is-invalid';
+        }
+
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarSelectCorrecto = (select) => {
+            const formControl = select.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = '';
+            select.className = 'form-select is-valid';
+        }
+
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarSelectNormal = (select) => {
+            const formControl = select.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = '';
+            select.className = 'form-select';
+        }
+
+
+        const visualizarReporte = (NumeroIdentificacion, tipoReporte, IdProyecto, IDTipo, Estado, Fecha, FechaF, Mes, Anno) => {
+            window.open("@Url.Action("Reporte", "Reportes")?NumeroIdentificacion=" + NumeroIdentificacion + "&tipoReporte=" + tipoReporte + "&IdProyecto=" + IdProyecto + "&IDTipo=" + IDTipo + "&Estado=" + Estado + "&Fecha=" + Fecha + "&FechaF=" + FechaF + "&Mes=" + Mes + "&Anno=" + Anno);
+            VF = 0;
+            VM = 0;
+            VA = 0;
+        }
+
+        const validarCamposFechas = () => {
+            const valorConsulta = selectConsulta.value.trim();
+            const fechaValor = txtFecha.value.trim();
+            const fechafValor = txtFechaF.value.trim();
+            // Banderas que indican que los datos por el usuario fueron ingresados correctamente
+            let banderaUno = false;
+            let banderaDos = false;
+            let banderaTres = false;
+            // Primero valida que el campo no este vacio
+            !fechaValor ? (validarErroneo(txtFecha, 'Campo requerido'), banderaUno = false) : (validarCorrecto(txtFecha), banderaUno = true);
+            !fechafValor ? (validarErroneo(txtFechaF, 'Campo requerido'), banderaDos = false) : (validarCorrecto(txtFechaF), banderaDos = true);
+            !valorConsulta ? (validarSelectErroneo(selectConsulta, 'Seleccione una opción'), banderaTres = false) : (validarSelectCorrecto(selectConsulta), banderaTres = true);
+            banderaUno && banderaDos && banderaTres ? VF = 1 : console.log('no')
+        }
+
+        const validarCamposMes = () => {
+            const valorConsulta = selectConsulta.value.trim();
+            const mesValor = selectMes.value.trim();
+            const annofValor = txtAnno.value.trim();
+            // Banderas que indican que los datos por el usuario fueron ingresados correctamente
+            let banderaUno = false;
+            let banderaDos = false;
+            let banderaTres = false;
+            // Primero valida que el campo no este vacio
+            !mesValor ? (validarSelectErroneo(selectMes, 'Seleccione un mes'), banderaUno = false) : (validarSelectCorrecto(selectMes), banderaUno = true);
+            !annofValor ? (validarErroneo(txtAnno, 'Campo requerido'), banderaDos = false) : (validarCorrecto(txtAnno), banderaDos = true);
+            !valorConsulta ? (validarSelectErroneo(selectConsulta, 'Seleccione una opción'), banderaTres = false) : (validarSelectCorrecto(selectConsulta), banderaTres = true);
+            banderaUno && banderaDos && banderaTres ? VM = 1 : console.log('no')
+        }
+
+        const validarCamposAnno = () => {
+            const valorConsulta = selectConsulta.value.trim();
+            const annoValor = txtAnno.value.trim();
+            // Banderas que indican que los datos por el usuario fueron ingresados correctamente
+            let banderaUno = false;
+            let banderaDos = false;
+            // Primero valida que el campo no este vacio
+            !annoValor ? (validarErroneo(txtAnno, 'Campo requerido'), banderaUno = false) : (validarCorrecto(txtAnno), banderaUno = true);
+            !valorConsulta ? (validarSelectErroneo(selectConsulta, 'Seleccione una opción'), banderaDos = false) : (validarSelectCorrecto(selectConsulta), banderaDos = true);
+            banderaUno && banderaDos ? VA = 1 : console.log('no')
+        }
+
+        const validarErroneo = (input, mensaje) => {
+            const formControl = input.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = mensaje;
+            input.className = 'form-control is-invalid';
+        }
+        // Valida que el usuario haya ingresado datos en el campo de texto indicado
+        const validarCorrecto = (input) => {
+            const formControl = input.parentElement;
+            const advertencia = formControl.querySelector('small');
+            advertencia.innerText = '';
+            input.className = 'form-control is-valid';
+        }
+    </script>
+
+</body>
+</html>

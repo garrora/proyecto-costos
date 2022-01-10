@@ -1,0 +1,1131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ModeloProyectoCostos.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cantones">
+          <Key>
+            <PropertyRef Name="IDCanton" />
+          </Key>
+          <Property Name="IDCanton" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Canton" Type="varchar" MaxLength="50" />
+          <Property Name="IDProvincia" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="NumeroIdentificacion" />
+          </Key>
+          <Property Name="NumeroIdentificacion" Type="bigint" Nullable="false" />
+          <Property Name="TipoIdentificacion" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="NumeroTelefonico" Type="int" />
+          <Property Name="CorreoElectronico" Type="varchar" MaxLength="75" />
+          <Property Name="CorreoElectronicoCopia" Type="varchar" MaxLength="75" />
+          <Property Name="CodigoTelefonico" Type="int" />
+          <Property Name="IDProvincia" Type="int" Nullable="false" />
+          <Property Name="IDCanton" Type="int" Nullable="false" />
+          <Property Name="IDDistrito" Type="int" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="CodGenerar">
+          <Key>
+            <PropertyRef Name="IdCodigo" />
+          </Key>
+          <Property Name="IdCodigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreProyecto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Costos">
+          <Key>
+            <PropertyRef Name="IDCosto" />
+          </Key>
+          <Property Name="IDCosto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Monto" Type="money" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
+          <Property Name="IdProyecto" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Distritos">
+          <Key>
+            <PropertyRef Name="IDDistrito" />
+          </Key>
+          <Property Name="IDDistrito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Distrito" Type="varchar" MaxLength="50" />
+          <Property Name="IDCanton" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Provincias">
+          <Key>
+            <PropertyRef Name="IDProvincia" />
+          </Key>
+          <Property Name="IDProvincia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Provincia" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Proyectos">
+          <Key>
+            <PropertyRef Name="IdProyecto" />
+          </Key>
+          <Property Name="IdProyecto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodProyecto" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="500" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="1000" />
+          <Property Name="FechaInicio" Type="date" />
+          <Property Name="FechaFin" Type="date" />
+          <Property Name="Monto" Type="money" />
+          <Property Name="Contrato" Type="varchar" MaxLength="500" />
+          <Property Name="NumeroIdentificacion" Type="bigint" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TipoCosto">
+          <Key>
+            <PropertyRef Name="IDTipo" />
+          </Key>
+          <Property Name="IDTipo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Usuario" />
+          </Key>
+          <Property Name="Usuario" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Contrasena" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cantones_Provincias">
+          <End Role="Provincias" Type="Self.Provincias" Multiplicity="1" />
+          <End Role="Cantones" Type="Self.Cantones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincias">
+              <PropertyRef Name="IDProvincia" />
+            </Principal>
+            <Dependent Role="Cantones">
+              <PropertyRef Name="IDProvincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes_Cantones">
+          <End Role="Cantones" Type="Self.Cantones" Multiplicity="1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cantones">
+              <PropertyRef Name="IDCanton" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IDCanton" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes_Distritos">
+          <End Role="Distritos" Type="Self.Distritos" Multiplicity="1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distritos">
+              <PropertyRef Name="IDDistrito" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IDDistrito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes_Provincias">
+          <End Role="Provincias" Type="Self.Provincias" Multiplicity="1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincias">
+              <PropertyRef Name="IDProvincia" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IDProvincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Distritos_Cantones">
+          <End Role="Cantones" Type="Self.Cantones" Multiplicity="1" />
+          <End Role="Distritos" Type="Self.Distritos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cantones">
+              <PropertyRef Name="IDCanton" />
+            </Principal>
+            <Dependent Role="Distritos">
+              <PropertyRef Name="IDCanton" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proyectos_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="Proyectos" Type="Self.Proyectos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="NumeroIdentificacion" />
+            </Principal>
+            <Dependent Role="Proyectos">
+              <PropertyRef Name="NumeroIdentificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SPActualizarCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NumeroIdentificacion" Type="bigint" Mode="In" />
+          <Parameter Name="TipoIdentificacion" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="NumeroTelefonico" Type="int" Mode="In" />
+          <Parameter Name="CorreoElectronico" Type="varchar" Mode="In" />
+          <Parameter Name="CorreoElectronicoCopia" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoTelefonico" Type="int" Mode="In" />
+          <Parameter Name="IDProvincia" Type="int" Mode="In" />
+          <Parameter Name="IDCanton" Type="int" Mode="In" />
+          <Parameter Name="IDDistrito" Type="int" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPActualizarCosto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDCosto" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Fecha" Type="varchar" Mode="In" />
+          <Parameter Name="Monto" Type="varchar" Mode="In" />
+          <Parameter Name="Tipo" Type="varchar" Mode="In" />
+          <Parameter Name="Moneda" Type="varchar" Mode="In" />
+          <Parameter Name="Cambio" Type="varchar" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPActualizarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="CodProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="FechaInicio" Type="varchar" Mode="In" />
+          <Parameter Name="FechaFin" Type="varchar" Mode="In" />
+          <Parameter Name="Monto" Type="varchar" Mode="In" />
+          <Parameter Name="Contrato" Type="varchar" Mode="In" />
+          <Parameter Name="NumeroIdentificacion" Type="varchar" Mode="In" />
+          <Parameter Name="Moneda" Type="varchar" Mode="In" />
+          <Parameter Name="Cambio" Type="varchar" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPActulizarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Usuario" Type="varchar" Mode="In" />
+          <Parameter Name="Contrasena" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPEliminarCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NumeroIdentificacion" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SPEliminarCosto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDCosto" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPEliminarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDProyecto" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPIniciarSesion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Usuario" Type="varchar" Mode="In" />
+          <Parameter Name="Contrasena" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPInsertarClientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NumeroIdentificacion" Type="bigint" Mode="In" />
+          <Parameter Name="TipoIdentificacion" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="NumeroTelefonico" Type="int" Mode="In" />
+          <Parameter Name="CorreoElectronico" Type="varchar" Mode="In" />
+          <Parameter Name="CorreoElectronicoCopia" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoTelefonico" Type="int" Mode="In" />
+          <Parameter Name="IDProvincia" Type="int" Mode="In" />
+          <Parameter Name="IDCanton" Type="int" Mode="In" />
+          <Parameter Name="IDDistrito" Type="int" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPInsertarCosto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Fecha" Type="varchar" Mode="In" />
+          <Parameter Name="Monto" Type="varchar" Mode="In" />
+          <Parameter Name="Tipo" Type="varchar" Mode="In" />
+          <Parameter Name="IDProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="Moneda" Type="varchar" Mode="In" />
+          <Parameter Name="Cambio" Type="varchar" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPInsertarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="FechaInicio" Type="varchar" Mode="In" />
+          <Parameter Name="FechaFin" Type="varchar" Mode="In" />
+          <Parameter Name="Monto" Type="varchar" Mode="In" />
+          <Parameter Name="Contrato" Type="varchar" Mode="In" />
+          <Parameter Name="NumeroIdentificacion" Type="varchar" Mode="In" />
+          <Parameter Name="Moneda" Type="varchar" Mode="In" />
+          <Parameter Name="Cambio" Type="varchar" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPListarCantidadProyectosCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarCanton" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarCantones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDProvincia" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPListarCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NumeroIdentificacion" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SPListarClientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarClientesProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarCosto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDCosto" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPListarCostoProyectoCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarCostos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarDistrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarDistritos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDCanton" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPListarEstadoCostos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarProvincia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDProvincia" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPListarProvincias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDProyecto" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPListarProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarPrueba" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarSelectClientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPListarSelectTipoCostos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ModeloProyectoCostosStoreContainer">
+          <EntitySet Name="Cantones" EntityType="Self.Cantones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CodGenerar" EntityType="Self.CodGenerar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Costos" EntityType="Self.Costos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Distritos" EntityType="Self.Distritos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provincias" EntityType="Self.Provincias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proyectos" EntityType="Self.Proyectos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoCosto" EntityType="Self.TipoCosto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cantones_Provincias" Association="Self.FK_Cantones_Provincias">
+            <End Role="Provincias" EntitySet="Provincias" />
+            <End Role="Cantones" EntitySet="Cantones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes_Cantones" Association="Self.FK_Clientes_Cantones">
+            <End Role="Cantones" EntitySet="Cantones" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes_Distritos" Association="Self.FK_Clientes_Distritos">
+            <End Role="Distritos" EntitySet="Distritos" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes_Provincias" Association="Self.FK_Clientes_Provincias">
+            <End Role="Provincias" EntitySet="Provincias" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Distritos_Cantones" Association="Self.FK_Distritos_Cantones">
+            <End Role="Cantones" EntitySet="Cantones" />
+            <End Role="Distritos" EntitySet="Distritos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proyectos_Clientes" Association="Self.FK_Proyectos_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Proyectos" EntitySet="Proyectos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ModeloProyectoCostos" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cantones">
+          <Key>
+            <PropertyRef Name="IDCanton" />
+          </Key>
+          <Property Name="IDCanton" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Canton" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDProvincia" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Provincias" Relationship="Self.FK_Cantones_Provincias" FromRole="Cantones" ToRole="Provincias" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_Clientes_Cantones" FromRole="Cantones" ToRole="Clientes" />
+          <NavigationProperty Name="Distritos" Relationship="Self.FK_Distritos_Cantones" FromRole="Cantones" ToRole="Distritos" />
+        </EntityType>
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="NumeroIdentificacion" />
+          </Key>
+          <Property Name="NumeroIdentificacion" Type="Int64" Nullable="false" />
+          <Property Name="TipoIdentificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumeroTelefonico" Type="Int32" />
+          <Property Name="CorreoElectronico" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="CorreoElectronicoCopia" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoTelefonico" Type="Int32" />
+          <Property Name="IDProvincia" Type="Int32" Nullable="false" />
+          <Property Name="IDCanton" Type="Int32" Nullable="false" />
+          <Property Name="IDDistrito" Type="Int32" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cantones" Relationship="Self.FK_Clientes_Cantones" FromRole="Clientes" ToRole="Cantones" />
+          <NavigationProperty Name="Distritos" Relationship="Self.FK_Clientes_Distritos" FromRole="Clientes" ToRole="Distritos" />
+          <NavigationProperty Name="Provincias" Relationship="Self.FK_Clientes_Provincias" FromRole="Clientes" ToRole="Provincias" />
+          <NavigationProperty Name="Proyectos" Relationship="Self.FK_Proyectos_Clientes" FromRole="Clientes" ToRole="Proyectos" />
+        </EntityType>
+        <EntityType Name="CodGenerar">
+          <Key>
+            <PropertyRef Name="IdCodigo" />
+          </Key>
+          <Property Name="IdCodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreProyecto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Costos">
+          <Key>
+            <PropertyRef Name="IDCosto" />
+          </Key>
+          <Property Name="IDCosto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="IdProyecto" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Distritos">
+          <Key>
+            <PropertyRef Name="IDDistrito" />
+          </Key>
+          <Property Name="IDDistrito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Distrito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDCanton" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cantones" Relationship="Self.FK_Distritos_Cantones" FromRole="Distritos" ToRole="Cantones" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_Clientes_Distritos" FromRole="Distritos" ToRole="Clientes" />
+        </EntityType>
+        <EntityType Name="Provincias">
+          <Key>
+            <PropertyRef Name="IDProvincia" />
+          </Key>
+          <Property Name="IDProvincia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Provincia" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cantones" Relationship="Self.FK_Cantones_Provincias" FromRole="Provincias" ToRole="Cantones" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_Clientes_Provincias" FromRole="Provincias" ToRole="Clientes" />
+        </EntityType>
+        <EntityType Name="Proyectos">
+          <Key>
+            <PropertyRef Name="IdProyecto" />
+          </Key>
+          <Property Name="IdProyecto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodProyecto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Precision="0" />
+          <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Contrato" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="NumeroIdentificacion" Type="Int64" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_Proyectos_Clientes" FromRole="Proyectos" ToRole="Clientes" />
+        </EntityType>
+        <EntityType Name="TipoCosto">
+          <Key>
+            <PropertyRef Name="IDTipo" />
+          </Key>
+          <Property Name="IDTipo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Usuario" />
+          </Key>
+          <Property Name="Usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contrasena" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cantones_Provincias">
+          <End Role="Provincias" Type="Self.Provincias" Multiplicity="1" />
+          <End Role="Cantones" Type="Self.Cantones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincias">
+              <PropertyRef Name="IDProvincia" />
+            </Principal>
+            <Dependent Role="Cantones">
+              <PropertyRef Name="IDProvincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes_Cantones">
+          <End Role="Cantones" Type="Self.Cantones" Multiplicity="1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cantones">
+              <PropertyRef Name="IDCanton" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IDCanton" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Distritos_Cantones">
+          <End Role="Cantones" Type="Self.Cantones" Multiplicity="1" />
+          <End Role="Distritos" Type="Self.Distritos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cantones">
+              <PropertyRef Name="IDCanton" />
+            </Principal>
+            <Dependent Role="Distritos">
+              <PropertyRef Name="IDCanton" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes_Distritos">
+          <End Role="Distritos" Type="Self.Distritos" Multiplicity="1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distritos">
+              <PropertyRef Name="IDDistrito" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IDDistrito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes_Provincias">
+          <End Role="Provincias" Type="Self.Provincias" Multiplicity="1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincias">
+              <PropertyRef Name="IDProvincia" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IDProvincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proyectos_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="Proyectos" Type="Self.Proyectos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="NumeroIdentificacion" />
+            </Principal>
+            <Dependent Role="Proyectos">
+              <PropertyRef Name="NumeroIdentificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProyectoCostosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cantones" EntityType="Self.Cantones" />
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+          <EntitySet Name="CodGenerar" EntityType="Self.CodGenerar" />
+          <EntitySet Name="Costos" EntityType="Self.Costos" />
+          <EntitySet Name="Distritos" EntityType="Self.Distritos" />
+          <EntitySet Name="Provincias" EntityType="Self.Provincias" />
+          <EntitySet Name="Proyectos" EntityType="Self.Proyectos" />
+          <EntitySet Name="TipoCosto" EntityType="Self.TipoCosto" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_Cantones_Provincias" Association="Self.FK_Cantones_Provincias">
+            <End Role="Provincias" EntitySet="Provincias" />
+            <End Role="Cantones" EntitySet="Cantones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes_Cantones" Association="Self.FK_Clientes_Cantones">
+            <End Role="Cantones" EntitySet="Cantones" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Distritos_Cantones" Association="Self.FK_Distritos_Cantones">
+            <End Role="Cantones" EntitySet="Cantones" />
+            <End Role="Distritos" EntitySet="Distritos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes_Distritos" Association="Self.FK_Clientes_Distritos">
+            <End Role="Distritos" EntitySet="Distritos" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes_Provincias" Association="Self.FK_Clientes_Provincias">
+            <End Role="Provincias" EntitySet="Provincias" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proyectos_Clientes" Association="Self.FK_Proyectos_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Proyectos" EntitySet="Proyectos" />
+          </AssociationSet>
+          <FunctionImport Name="SPActualizarCliente">
+            <Parameter Name="NumeroIdentificacion" Mode="In" Type="Int64" />
+            <Parameter Name="TipoIdentificacion" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="NumeroTelefonico" Mode="In" Type="Int32" />
+            <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
+            <Parameter Name="CorreoElectronicoCopia" Mode="In" Type="String" />
+            <Parameter Name="CodigoTelefonico" Mode="In" Type="Int32" />
+            <Parameter Name="IDProvincia" Mode="In" Type="Int32" />
+            <Parameter Name="IDCanton" Mode="In" Type="Int32" />
+            <Parameter Name="IDDistrito" Mode="In" Type="Int32" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPActualizarCosto">
+            <Parameter Name="IDCosto" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="String" />
+            <Parameter Name="Monto" Mode="In" Type="String" />
+            <Parameter Name="Tipo" Mode="In" Type="String" />
+            <Parameter Name="Moneda" Mode="In" Type="String" />
+            <Parameter Name="Cambio" Mode="In" Type="String" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPActualizarProyecto">
+            <Parameter Name="IDProyecto" Mode="In" Type="String" />
+            <Parameter Name="CodProyecto" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="FechaInicio" Mode="In" Type="String" />
+            <Parameter Name="FechaFin" Mode="In" Type="String" />
+            <Parameter Name="Monto" Mode="In" Type="String" />
+            <Parameter Name="Contrato" Mode="In" Type="String" />
+            <Parameter Name="NumeroIdentificacion" Mode="In" Type="String" />
+            <Parameter Name="Moneda" Mode="In" Type="String" />
+            <Parameter Name="Cambio" Mode="In" Type="String" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPActulizarContrasena">
+            <Parameter Name="Usuario" Mode="In" Type="String" />
+            <Parameter Name="Contrasena" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPEliminarCliente">
+            <Parameter Name="NumeroIdentificacion" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SPEliminarCosto">
+            <Parameter Name="IDCosto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPEliminarProyecto">
+            <Parameter Name="IDProyecto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPIniciarSesion" ReturnType="Collection(Int32)">
+            <Parameter Name="Usuario" Mode="In" Type="String" />
+            <Parameter Name="Contrasena" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPInsertarClientes">
+            <Parameter Name="NumeroIdentificacion" Mode="In" Type="Int64" />
+            <Parameter Name="TipoIdentificacion" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="NumeroTelefonico" Mode="In" Type="Int32" />
+            <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
+            <Parameter Name="CorreoElectronicoCopia" Mode="In" Type="String" />
+            <Parameter Name="CodigoTelefonico" Mode="In" Type="Int32" />
+            <Parameter Name="IDProvincia" Mode="In" Type="Int32" />
+            <Parameter Name="IDCanton" Mode="In" Type="Int32" />
+            <Parameter Name="IDDistrito" Mode="In" Type="Int32" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPInsertarCosto">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="String" />
+            <Parameter Name="Monto" Mode="In" Type="String" />
+            <Parameter Name="Tipo" Mode="In" Type="String" />
+            <Parameter Name="IDProyecto" Mode="In" Type="String" />
+            <Parameter Name="Moneda" Mode="In" Type="String" />
+            <Parameter Name="Cambio" Mode="In" Type="String" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPInsertarProyecto">
+            <Parameter Name="CodProyecto" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="FechaInicio" Mode="In" Type="String" />
+            <Parameter Name="FechaFin" Mode="In" Type="String" />
+            <Parameter Name="Monto" Mode="In" Type="String" />
+            <Parameter Name="Contrato" Mode="In" Type="String" />
+            <Parameter Name="NumeroIdentificacion" Mode="In" Type="String" />
+            <Parameter Name="Moneda" Mode="In" Type="String" />
+            <Parameter Name="Cambio" Mode="In" Type="String" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPListarCantidadProyectosCliente" ReturnType="Collection(ModeloProyectoCostos.SPListarCantidadProyectosCliente_Result)" />
+          <FunctionImport Name="SPListarCanton" ReturnType="Collection(ModeloProyectoCostos.SPListarCanton_Result)" />
+          <FunctionImport Name="SPListarCantones" ReturnType="Collection(ModeloProyectoCostos.SPListarCantones_Result)">
+            <Parameter Name="IDProvincia" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPListarCliente" ReturnType="Collection(ModeloProyectoCostos.SPListarCliente_Result)">
+            <Parameter Name="NumeroIdentificacion" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SPListarClientes" ReturnType="Collection(ModeloProyectoCostos.SPListarClientes_Result)" />
+          <FunctionImport Name="SPListarClientesProyecto" ReturnType="Collection(ModeloProyectoCostos.SPListarClientesProyecto_Result)" />
+          <FunctionImport Name="SPListarCosto" ReturnType="Collection(ModeloProyectoCostos.SPListarCosto_Result)">
+            <Parameter Name="IDCosto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPListarCostoProyectoCliente" ReturnType="Collection(ModeloProyectoCostos.SPListarCostoProyectoCliente_Result)" />
+          <FunctionImport Name="SPListarCostos" ReturnType="Collection(ModeloProyectoCostos.SPListarCostos_Result)" />
+          <FunctionImport Name="SPListarDistrito" ReturnType="Collection(ModeloProyectoCostos.SPListarDistrito_Result)" />
+          <FunctionImport Name="SPListarDistritos" ReturnType="Collection(ModeloProyectoCostos.SPListarDistritos_Result)">
+            <Parameter Name="IDCanton" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPListarEstadoCostos" ReturnType="Collection(String)" />
+          <FunctionImport Name="SPListarProvincia" ReturnType="Collection(ModeloProyectoCostos.SPListarProvincia_Result)">
+            <Parameter Name="IDProvincia" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPListarProvincias" ReturnType="Collection(ModeloProyectoCostos.SPListarProvincias_Result)" />
+          <FunctionImport Name="SPListarProyecto" ReturnType="Collection(ModeloProyectoCostos.SPListarProyecto_Result)">
+            <Parameter Name="IDProyecto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPListarProyectos" ReturnType="Collection(ModeloProyectoCostos.SPListarProyectos_Result)" />
+          <FunctionImport Name="SPListarPrueba" ReturnType="Collection(ModeloProyectoCostos.SPListarPrueba_Result)" />
+          <FunctionImport Name="SPListarSelectClientes" ReturnType="Collection(ModeloProyectoCostos.SPListarSelectClientes_Result)" />
+          <FunctionImport Name="SPListarSelectTipoCostos" ReturnType="Collection(ModeloProyectoCostos.SPListarSelectTipoCostos_Result)" />
+        </EntityContainer>
+        <ComplexType Name="SPListarCantidadProyectosCliente_Result">
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="200" />
+          <Property Type="Int64" Name="NumeroIdentificacion" Nullable="false" />
+          <Property Type="Int32" Name="NumeroTelefonico" Nullable="true" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="400" />
+          <Property Type="String" Name="CorreoElectronico" Nullable="true" MaxLength="75" />
+          <Property Type="Int32" Name="IdProyecto" Nullable="false" />
+          <Property Type="String" Name="CodProyecto" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Nombre1" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="1000" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="true" />
+          <Property Type="DateTime" Name="FechaFin" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SPListarCanton_Result">
+          <Property Type="Int32" Name="IDCanton" Nullable="false" />
+          <Property Type="String" Name="Canton" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SPListarCantones_Result">
+          <Property Type="Int32" Name="IDCanton" Nullable="false" />
+          <Property Type="String" Name="Canton" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SPListarCliente_Result">
+          <Property Type="Int64" Name="NumeroIdentificacion" Nullable="false" />
+          <Property Type="String" Name="TipoIdentificacion" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="NumeroTelefonico" Nullable="true" />
+          <Property Type="String" Name="CorreoElectronico" Nullable="true" MaxLength="75" />
+          <Property Type="String" Name="CorreoElectronicoCopia" Nullable="true" MaxLength="75" />
+          <Property Type="Int32" Name="CodigoTelefonico" Nullable="true" />
+          <Property Type="Int32" Name="IDProvincia" Nullable="false" />
+          <Property Type="Int32" Name="IDCanton" Nullable="false" />
+          <Property Type="Int32" Name="IDDistrito" Nullable="false" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="400" />
+        </ComplexType>
+        <ComplexType Name="SPListarClientes_Result">
+          <Property Type="Int64" Name="NumeroIdentificacion" Nullable="false" />
+          <Property Type="String" Name="TipoIdentificacion" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="NumeroTelefonico" Nullable="true" />
+          <Property Type="String" Name="CorreoElectronico" Nullable="false" MaxLength="75" />
+          <Property Type="String" Name="CorreoElectronicoCopia" Nullable="false" MaxLength="75" />
+          <Property Type="Int32" Name="CodigoTelefonico" Nullable="true" />
+          <Property Type="String" Name="Provincia" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Canton" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Distrito" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="400" />
+        </ComplexType>
+        <ComplexType Name="SPListarClientesProyecto_Result">
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="200" />
+          <Property Type="Int64" Name="NumeroIdentificacion" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPListarCosto_Result">
+          <Property Type="Int32" Name="IDCosto" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FechaC" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Monto" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="Tipo" Nullable="false" />
+          <Property Type="String" Name="Estado" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="IdProyecto" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPListarCostoProyectoCliente_Result">
+          <Property Type="Int32" Name="IdProyecto" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="200" />
+          <Property Type="Int64" Name="NumeroIdentificacion" Nullable="false" />
+          <Property Type="String" Name="Nombre1" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SPListarCostos_Result">
+          <Property Type="Int32" Name="IDCosto" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FechaC" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Monto" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="Tipo" Nullable="false" />
+          <Property Type="String" Name="Estado" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="IdProyecto" Nullable="false" />
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Proyecto" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SPListarDistrito_Result">
+          <Property Type="Int32" Name="IDDistrito" Nullable="false" />
+          <Property Type="String" Name="Distrito" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SPListarDistritos_Result">
+          <Property Type="Int32" Name="IDDistrito" Nullable="false" />
+          <Property Type="String" Name="Distrito" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SPListarProvincia_Result">
+          <Property Type="Int32" Name="IDProvincia" Nullable="false" />
+          <Property Type="String" Name="Provincia" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="SPListarProvincias_Result">
+          <Property Type="Int32" Name="IDProvincia" Nullable="false" />
+          <Property Type="String" Name="Provincia" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="SPListarProyecto_Result">
+          <Property Type="Int32" Name="IDProyecto" Nullable="false" />
+          <Property Type="String" Name="CodProyecto" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="Inicio" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Fin" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Monto" Nullable="true" Precision="19" />
+          <Property Type="String" Name="Contrato" Nullable="true" MaxLength="500" />
+          <Property Type="Int64" Name="NumeroIdentificacion" Nullable="false" />
+          <Property Type="String" Name="Estado" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SPListarProyectos_Result">
+          <Property Type="Int32" Name="IdProyecto" Nullable="false" />
+          <Property Type="String" Name="CodProyecto" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="Inicio" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Fin" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Monto" Nullable="true" Precision="19" />
+          <Property Type="String" Name="Contrato" Nullable="true" MaxLength="500" />
+          <Property Type="Int64" Name="NumeroIdentificacion" Nullable="false" />
+          <Property Type="String" Name="Cliente" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Estado" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SPListarPrueba_Result">
+          <Property Type="Int32" Name="IdProyecto" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="200" />
+          <Property Type="Int64" Name="NumeroIdentificacion" Nullable="false" />
+          <Property Type="String" Name="Nombre1" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SPListarSelectClientes_Result">
+          <Property Type="Int64" Name="NumeroIdentificacion" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="SPListarSelectTipoCostos_Result">
+          <Property Type="Int32" Name="IDTipo" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModeloProyectoCostosStoreContainer" CdmEntityContainer="ProyectoCostosEntities">
+          <EntitySetMapping Name="Cantones">
+            <EntityTypeMapping TypeName="ModeloProyectoCostos.Cantones">
+              <MappingFragment StoreEntitySet="Cantones">
+                <ScalarProperty Name="IDCanton" ColumnName="IDCanton" />
+                <ScalarProperty Name="Canton" ColumnName="Canton" />
+                <ScalarProperty Name="IDProvincia" ColumnName="IDProvincia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="ModeloProyectoCostos.Clientes">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="TipoIdentificacion" ColumnName="TipoIdentificacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NumeroTelefonico" ColumnName="NumeroTelefonico" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="CorreoElectronicoCopia" ColumnName="CorreoElectronicoCopia" />
+                <ScalarProperty Name="CodigoTelefonico" ColumnName="CodigoTelefonico" />
+                <ScalarProperty Name="IDProvincia" ColumnName="IDProvincia" />
+                <ScalarProperty Name="IDCanton" ColumnName="IDCanton" />
+                <ScalarProperty Name="IDDistrito" ColumnName="IDDistrito" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodGenerar">
+            <EntityTypeMapping TypeName="ModeloProyectoCostos.CodGenerar">
+              <MappingFragment StoreEntitySet="CodGenerar">
+                <ScalarProperty Name="IdCodigo" ColumnName="IdCodigo" />
+                <ScalarProperty Name="NombreProyecto" ColumnName="NombreProyecto" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Costos">
+            <EntityTypeMapping TypeName="ModeloProyectoCostos.Costos">
+              <MappingFragment StoreEntitySet="Costos">
+                <ScalarProperty Name="IDCosto" ColumnName="IDCosto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="IdProyecto" ColumnName="IdProyecto" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Distritos">
+            <EntityTypeMapping TypeName="ModeloProyectoCostos.Distritos">
+              <MappingFragment StoreEntitySet="Distritos">
+                <ScalarProperty Name="IDDistrito" ColumnName="IDDistrito" />
+                <ScalarProperty Name="Distrito" ColumnName="Distrito" />
+                <ScalarProperty Name="IDCanton" ColumnName="IDCanton" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provincias">
+            <EntityTypeMapping TypeName="ModeloProyectoCostos.Provincias">
+              <MappingFragment StoreEntitySet="Provincias">
+                <ScalarProperty Name="IDProvincia" ColumnName="IDProvincia" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proyectos">
+            <EntityTypeMapping TypeName="ModeloProyectoCostos.Proyectos">
+              <MappingFragment StoreEntitySet="Proyectos">
+                <ScalarProperty Name="IdProyecto" ColumnName="IdProyecto" />
+                <ScalarProperty Name="CodProyecto" ColumnName="CodProyecto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Contrato" ColumnName="Contrato" />
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoCosto">
+            <EntityTypeMapping TypeName="ModeloProyectoCostos.TipoCosto">
+              <MappingFragment StoreEntitySet="TipoCosto">
+                <ScalarProperty Name="IDTipo" ColumnName="IDTipo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="ModeloProyectoCostos.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPActualizarCliente" FunctionName="ModeloProyectoCostos.Store.SPActualizarCliente" />
+          <FunctionImportMapping FunctionImportName="SPActualizarCosto" FunctionName="ModeloProyectoCostos.Store.SPActualizarCosto" />
+          <FunctionImportMapping FunctionImportName="SPActualizarProyecto" FunctionName="ModeloProyectoCostos.Store.SPActualizarProyecto" />
+          <FunctionImportMapping FunctionImportName="SPActulizarContrasena" FunctionName="ModeloProyectoCostos.Store.SPActulizarContrasena" />
+          <FunctionImportMapping FunctionImportName="SPEliminarCliente" FunctionName="ModeloProyectoCostos.Store.SPEliminarCliente" />
+          <FunctionImportMapping FunctionImportName="SPEliminarCosto" FunctionName="ModeloProyectoCostos.Store.SPEliminarCosto" />
+          <FunctionImportMapping FunctionImportName="SPEliminarProyecto" FunctionName="ModeloProyectoCostos.Store.SPEliminarProyecto" />
+          <FunctionImportMapping FunctionImportName="SPIniciarSesion" FunctionName="ModeloProyectoCostos.Store.SPIniciarSesion" />
+          <FunctionImportMapping FunctionImportName="SPInsertarClientes" FunctionName="ModeloProyectoCostos.Store.SPInsertarClientes" />
+          <FunctionImportMapping FunctionImportName="SPInsertarCosto" FunctionName="ModeloProyectoCostos.Store.SPInsertarCosto" />
+          <FunctionImportMapping FunctionImportName="SPInsertarProyecto" FunctionName="ModeloProyectoCostos.Store.SPInsertarProyecto" />
+          <FunctionImportMapping FunctionImportName="SPListarCantidadProyectosCliente" FunctionName="ModeloProyectoCostos.Store.SPListarCantidadProyectosCliente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarCantidadProyectosCliente_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="NumeroTelefonico" ColumnName="NumeroTelefonico" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="IdProyecto" ColumnName="IdProyecto" />
+                <ScalarProperty Name="CodProyecto" ColumnName="CodProyecto" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarCanton" FunctionName="ModeloProyectoCostos.Store.SPListarCanton">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarCanton_Result">
+                <ScalarProperty Name="IDCanton" ColumnName="IDCanton" />
+                <ScalarProperty Name="Canton" ColumnName="Canton" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarCantones" FunctionName="ModeloProyectoCostos.Store.SPListarCantones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarCantones_Result">
+                <ScalarProperty Name="IDCanton" ColumnName="IDCanton" />
+                <ScalarProperty Name="Canton" ColumnName="Canton" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarCliente" FunctionName="ModeloProyectoCostos.Store.SPListarCliente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarCliente_Result">
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="TipoIdentificacion" ColumnName="TipoIdentificacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NumeroTelefonico" ColumnName="NumeroTelefonico" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="CorreoElectronicoCopia" ColumnName="CorreoElectronicoCopia" />
+                <ScalarProperty Name="CodigoTelefonico" ColumnName="CodigoTelefonico" />
+                <ScalarProperty Name="IDProvincia" ColumnName="IDProvincia" />
+                <ScalarProperty Name="IDCanton" ColumnName="IDCanton" />
+                <ScalarProperty Name="IDDistrito" ColumnName="IDDistrito" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarClientes" FunctionName="ModeloProyectoCostos.Store.SPListarClientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarClientes_Result">
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="TipoIdentificacion" ColumnName="TipoIdentificacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NumeroTelefonico" ColumnName="NumeroTelefonico" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="CorreoElectronicoCopia" ColumnName="CorreoElectronicoCopia" />
+                <ScalarProperty Name="CodigoTelefonico" ColumnName="CodigoTelefonico" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="Canton" ColumnName="Canton" />
+                <ScalarProperty Name="Distrito" ColumnName="Distrito" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarClientesProyecto" FunctionName="ModeloProyectoCostos.Store.SPListarClientesProyecto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarClientesProyecto_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarCosto" FunctionName="ModeloProyectoCostos.Store.SPListarCosto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarCosto_Result">
+                <ScalarProperty Name="IDCosto" ColumnName="IDCosto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaC" ColumnName="FechaC" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdProyecto" ColumnName="IdProyecto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarCostoProyectoCliente" FunctionName="ModeloProyectoCostos.Store.SPListarCostoProyectoCliente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarCostoProyectoCliente_Result">
+                <ScalarProperty Name="IdProyecto" ColumnName="IdProyecto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarCostos" FunctionName="ModeloProyectoCostos.Store.SPListarCostos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarCostos_Result">
+                <ScalarProperty Name="IDCosto" ColumnName="IDCosto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaC" ColumnName="FechaC" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdProyecto" ColumnName="IdProyecto" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarDistrito" FunctionName="ModeloProyectoCostos.Store.SPListarDistrito">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarDistrito_Result">
+                <ScalarProperty Name="IDDistrito" ColumnName="IDDistrito" />
+                <ScalarProperty Name="Distrito" ColumnName="Distrito" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarDistritos" FunctionName="ModeloProyectoCostos.Store.SPListarDistritos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarDistritos_Result">
+                <ScalarProperty Name="IDDistrito" ColumnName="IDDistrito" />
+                <ScalarProperty Name="Distrito" ColumnName="Distrito" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarEstadoCostos" FunctionName="ModeloProyectoCostos.Store.SPListarEstadoCostos" />
+          <FunctionImportMapping FunctionImportName="SPListarProvincia" FunctionName="ModeloProyectoCostos.Store.SPListarProvincia">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarProvincia_Result">
+                <ScalarProperty Name="IDProvincia" ColumnName="IDProvincia" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarProvincias" FunctionName="ModeloProyectoCostos.Store.SPListarProvincias">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarProvincias_Result">
+                <ScalarProperty Name="IDProvincia" ColumnName="IDProvincia" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarProyecto" FunctionName="ModeloProyectoCostos.Store.SPListarProyecto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarProyecto_Result">
+                <ScalarProperty Name="IDProyecto" ColumnName="IDProyecto" />
+                <ScalarProperty Name="CodProyecto" ColumnName="CodProyecto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+                <ScalarProperty Name="Fin" ColumnName="Fin" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Contrato" ColumnName="Contrato" />
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarProyectos" FunctionName="ModeloProyectoCostos.Store.SPListarProyectos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarProyectos_Result">
+                <ScalarProperty Name="IdProyecto" ColumnName="IdProyecto" />
+                <ScalarProperty Name="CodProyecto" ColumnName="CodProyecto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+                <ScalarProperty Name="Fin" ColumnName="Fin" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Contrato" ColumnName="Contrato" />
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarPrueba" FunctionName="ModeloProyectoCostos.Store.SPListarPrueba">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarPrueba_Result">
+                <ScalarProperty Name="IdProyecto" ColumnName="IdProyecto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarSelectClientes" FunctionName="ModeloProyectoCostos.Store.SPListarSelectClientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarSelectClientes_Result">
+                <ScalarProperty Name="NumeroIdentificacion" ColumnName="NumeroIdentificacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPListarSelectTipoCostos" FunctionName="ModeloProyectoCostos.Store.SPListarSelectTipoCostos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModeloProyectoCostos.SPListarSelectTipoCostos_Result">
+                <ScalarProperty Name="IDTipo" ColumnName="IDTipo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
